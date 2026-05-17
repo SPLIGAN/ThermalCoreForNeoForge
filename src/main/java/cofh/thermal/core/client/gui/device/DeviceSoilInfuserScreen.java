@@ -18,7 +18,7 @@ import static cofh.lib.util.helpers.StringHelper.localize;
 public class DeviceSoilInfuserScreen extends AugmentableTileScreen<DeviceSoilInfuserMenu> {
 
     public static final String TEX_PATH = ID_THERMAL + ":textures/gui/container/soil_infuser.png";
-    public static final ResourceLocation TEXTURE = new ResourceLocation(TEX_PATH);
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(TEX_PATH);
 
     public DeviceSoilInfuserScreen(DeviceSoilInfuserMenu container, Inventory inv, Component titleIn) {
 

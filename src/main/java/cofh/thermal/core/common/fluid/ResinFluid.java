@@ -34,7 +34,7 @@ public class ResinFluid extends FluidCoFH {
 
         super(FLUIDS, ID_FLUID_RESIN);
 
-        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_RESIN), () -> new BucketItem(stillFluid, itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
+        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_RESIN), () -> new BucketItem(stillFluid.get(), itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
     }
 
     @Override
@@ -61,8 +61,8 @@ public class ResinFluid extends FluidCoFH {
             consumer.accept(new IClientFluidTypeExtensions() {
 
                 private static final ResourceLocation
-                        STILL = new ResourceLocation("thermal:block/fluids/resin_still"),
-                        FLOW = new ResourceLocation("thermal:block/fluids/resin_flow");
+                        STILL = ResourceLocation.parse("thermal:block/fluids/resin_still"),
+                        FLOW = ResourceLocation.parse("thermal:block/fluids/resin_flow");
 
                 @Override
                 public ResourceLocation getStillTexture() {

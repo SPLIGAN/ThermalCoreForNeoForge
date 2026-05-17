@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:phytogro_explosives"
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_phytogro": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thermal:phytogro"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:phyto_grenade_4"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_phytogro"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:phyto_grenade_4"
+    ]
+  }
+}

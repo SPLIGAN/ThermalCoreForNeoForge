@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:potion_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:gears/lumium"
+    },
+    "I": {
+      "tag": "c:ingots/copper"
+    },
+    "X": {
+      "tag": "thermal:glass/hardened"
+    }
+  },
+  "pattern": [
+    " G ",
+    "IXI",
+    " G "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:potion_duration_augment"
+  }
+}

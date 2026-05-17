@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:villager_spawn_egg"
+    },
+    {
+      "item": "thermal:lightning_charge"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:witch_spawn_egg"
+  }
+}

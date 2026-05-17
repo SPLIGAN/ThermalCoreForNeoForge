@@ -7,7 +7,9 @@ import cofh.core.util.control.RedstoneControlModule;
 import cofh.core.util.control.SecurityControlModule;
 import cofh.thermal.core.common.config.ThermalCoreConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +31,8 @@ public class LogisticsBlockEntity extends BlockEntityCoFH implements ISecurableT
     @Override
     public ItemStack createItemStackTag(ItemStack stack) {
 
-        CompoundTag nbt = stack.getOrCreateTagElement(TAG_BLOCK_ENTITY);
+        stack = super.createItemStackTag(stack);
+        CompoundTag nbt = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY).copyTag();
         if (hasSecurity()) {
             securityControl().write(nbt);
         }
@@ -37,25 +40,25 @@ public class LogisticsBlockEntity extends BlockEntityCoFH implements ISecurableT
             redstoneControl().writeSettings(nbt);
         }
         if (!nbt.isEmpty()) {
-            stack.addTagElement(TAG_BLOCK_ENTITY, nbt);
+            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(nbt));
         }
-        return super.createItemStackTag(stack);
+        return stack;
     }
 
     // region NBT
     @Override
-    public void load(CompoundTag nbt) {
+    protected void loadAdditional(CompoundTag nbt, net.minecraft.core.HolderLookup.Provider registries) {
 
-        super.load(nbt);
+        super.loadAdditional(nbt, registries);
 
         securityControl.read(nbt);
         redstoneControl.read(nbt);
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt, net.minecraft.core.HolderLookup.Provider registries) {
 
-        super.saveAdditional(nbt);
+        super.saveAdditional(nbt, registries);
 
         securityControl.write(nbt);
         redstoneControl.write(nbt);

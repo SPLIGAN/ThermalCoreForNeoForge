@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:upgrade_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:gems/quartz"
+    },
+    "I": {
+      "tag": "c:ingots/electrum"
+    },
+    "R": {
+      "tag": "c:gears/signalum"
+    },
+    "X": {
+      "item": "thermal:upgrade_augment_1"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "RXR",
+    "IGI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:upgrade_augment_2"
+  }
+}

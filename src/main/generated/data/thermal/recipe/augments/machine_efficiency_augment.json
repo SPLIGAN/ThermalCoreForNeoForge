@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:machine_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "c:plates/lumium"
+    },
+    "N": {
+      "tag": "c:gears/nickel"
+    },
+    "X": {
+      "item": "thermal:rf_coil"
+    }
+  },
+  "pattern": [
+    " N ",
+    "LXL",
+    " N "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:machine_efficiency_augment"
+  }
+}

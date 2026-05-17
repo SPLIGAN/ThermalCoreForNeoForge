@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#forge:is_sandy",
+  "biomes": "#c:is_sandy",
   "spawners": {
     "type": "thermal:blitz",
     "maxCount": 3,

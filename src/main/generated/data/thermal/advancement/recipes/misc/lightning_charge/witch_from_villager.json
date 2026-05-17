@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:lightning_charge/witch_from_villager"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_villager_spawn_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:villager_spawn_egg"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_villager_spawn_egg"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:lightning_charge/witch_from_villager"
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:dynamo_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:gears/lead"
+    },
+    "L": {
+      "tag": "c:plates/lumium"
+    },
+    "X": {
+      "tag": "thermal:glass/hardened"
+    }
+  },
+  "pattern": [
+    " G ",
+    "LXL",
+    " G "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:dynamo_fuel_augment"
+  }
+}

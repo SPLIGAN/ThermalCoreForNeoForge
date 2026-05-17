@@ -7,7 +7,9 @@ import cofh.lib.util.helpers.MathHelper;
 import cofh.lib.util.helpers.StringHelper;
 import cofh.thermal.core.common.entity.projectile.ThrownFlorb;
 import net.minecraft.core.Position;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -58,25 +60,6 @@ public class FlorbItem extends FluidContainerItem {
             tooltip.add(getTextComponent(localize("info.cofh.effects") + ":"));
             addPotionTooltip(fluid, tooltip);
         }
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-
-        List<Component> additionalTooltips = new ArrayList<>();
-        tooltipDelegate(stack, worldIn, additionalTooltips, flagIn);
-        tooltip.addAll(additionalTooltips);
-
-        //        if (SecurityHelper.isItemClaimable(stack)) {
-        //            tooltip.add(getTextComponent("info.cofh.claimable").withStyle(GREEN).withStyle(ITALIC));
-        //        }
-        //        if (!additionalTooltips.isEmpty()) {
-        //            if (Screen.hasShiftDown() || CoreClientConfig.alwaysShowDetails.get()) {
-        //                tooltip.addAll(additionalTooltips);
-        //            } else if (CoreClientConfig.holdShiftForDetails.get()) {
-        //                tooltip.add(getTextComponent("info.cofh.hold_shift_for_details").withStyle(GRAY));
-        //            }
-        //        }
     }
 
     @Override
@@ -137,22 +120,22 @@ public class FlorbItem extends FluidContainerItem {
     // endregion
 
     // region DISPENSER BEHAVIOR
-    private static final AbstractProjectileDispenseBehavior DISPENSER_BEHAVIOR = new AbstractProjectileDispenseBehavior() {
+    private static final DefaultDispenseItemBehavior DISPENSER_BEHAVIOR = new DefaultDispenseItemBehavior() {
 
         @Override
-        public Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
+        public ItemStack execute(BlockSource source, ItemStack stack) {
 
-            ThrownFlorb florb = new ThrownFlorb(worldIn, position.x(), position.y(), position.z());
-            ItemStack throwStack = cloneStack(stackIn, 1);
+            Level level = source.level();
+            Position position = DispenserBlock.getDispensePosition(source);
+            ThrownFlorb florb = new ThrownFlorb(level, position.x(), position.y(), position.z());
+            ItemStack throwStack = cloneStack(stack, 1);
             throwStack.setDamageValue(1);
             florb.setItem(throwStack);
-            return florb;
-        }
-
-        @Override
-        protected float getUncertainty() {
-
-            return 3.0F;
+            Direction direction = source.state().getValue(DispenserBlock.FACING);
+            florb.shoot(direction.getStepX(), direction.getStepY() + 0.1F, direction.getStepZ(), 1.0F, 3.0F);
+            level.addFreshEntity(florb);
+            stack.shrink(1);
+            return stack;
         }
     };
     // endregion

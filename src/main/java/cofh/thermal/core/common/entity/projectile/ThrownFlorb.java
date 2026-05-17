@@ -82,7 +82,7 @@ public class ThrownFlorb extends ThrowableItemProjectile {
                 } else if (result instanceof EntityHitResult entityHitResult) {
                     hitPos = entityHitResult.getEntity().getOnPos();
                 }
-                FluidActionResult actionResult = FluidUtil.tryPlaceFluid(getOwner() instanceof Player player ? player : null, this.level, MAIN_HAND, hitPos.relative(hitDir), getItem(), new FluidStack(getFluid(getItem()), BUCKET_VOLUME));
+                FluidActionResult actionResult = FluidUtil.tryPlaceFluid(getOwner() instanceof Player player ? player : null, this.level, MAIN_HAND, hitPos.relative(hitDir), getItem(), getFluid(getItem()).copyWithAmount(BUCKET_VOLUME));
             }
             this.level.broadcastEntityEvent(this, (byte) 3);
             this.discard();
@@ -107,7 +107,7 @@ public class ThrownFlorb extends ThrowableItemProjectile {
     }
 
     @Override
-    protected float getGravity() {
+    protected double getDefaultGravity() {
 
         return gravity;
     }
@@ -115,11 +115,11 @@ public class ThrownFlorb extends ThrowableItemProjectile {
     // region HELPERS
     public static FluidStack getFluid(ItemStack container) {
 
-        CompoundTag tag = container.getOrCreateTag();
+        CompoundTag tag = cofh.lib.util.CoFHItemData.getTag(container);
         if (!tag.contains(TAG_FLUID)) {
             return FluidStack.EMPTY;
         }
-        return FluidStack.loadFluidStackFromNBT(tag.getCompound(TAG_FLUID));
+        return FluidStack.parseOptional(cofh.lib.util.CoFHRegistryLookup.registries(), tag.getCompound(TAG_FLUID));
     }
     // endregion
 }

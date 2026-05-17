@@ -5,8 +5,11 @@ import cofh.core.util.ProxyUtils;
 import cofh.lib.api.IConveyableData;
 import cofh.lib.api.control.ISecurable;
 import cofh.lib.api.item.IPlacementItem;
+import cofh.lib.init.CoFHDataComponents;
+import cofh.lib.util.CoFHItemData;
 import cofh.lib.util.Utils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 import static cofh.lib.util.helpers.StringHelper.canLocalize;
 import static cofh.lib.util.helpers.StringHelper.getTextComponent;
 import static net.minecraft.ChatFormatting.DARK_GRAY;
@@ -37,15 +41,26 @@ public class RedprintItem extends ItemCoFH implements IPlacementItem {
 
         super(builder);
 
-        ProxyUtils.registerItemModelProperty(this, new ResourceLocation("has_data"), ((stack, world, entity, seed) -> stack.hasTag() ? 1F : 0F));
+        ProxyUtils.registerItemModelProperty(this, ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "has_data"), ((stack, world, entity, seed) -> hasStoredData(stack) ? 1F : 0F));
+    }
+
+    private static boolean hasStoredData(ItemStack stack) {
+
+        return !CoFHItemData.getTag(stack).isEmpty();
+    }
+
+    private static void clearStoredData(ItemStack stack) {
+
+        stack.remove(CoFHDataComponents.COFH_ITEM_DATA.get());
+        stack.remove(DataComponents.CUSTOM_DATA);
     }
 
     @Override
     protected void tooltipDelegate(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 
-        CompoundTag conveyableData = stack.getTag();
+        CompoundTag conveyableData = CoFHItemData.getTag(stack);
 
-        if (conveyableData == null) {
+        if (conveyableData.isEmpty()) {
             tooltip.add(getTextComponent("info.thermal.redprint.use").withStyle(GRAY));
         } else {
             tooltip.add(getTextComponent("info.thermal.redprint.use.contents").withStyle(GRAY));
@@ -65,10 +80,9 @@ public class RedprintItem extends ItemCoFH implements IPlacementItem {
         }
     }
 
-    @Override
     public Rarity getRarity(ItemStack stack) {
 
-        return stack.hasTag() ? Rarity.UNCOMMON : Rarity.COMMON;
+        return hasStoredData(stack) ? Rarity.UNCOMMON : Rarity.COMMON;
     }
 
     protected boolean useDelegate(ItemStack stack, UseOnContext context) {
@@ -80,9 +94,9 @@ public class RedprintItem extends ItemCoFH implements IPlacementItem {
             return false;
         }
         if (player.isSecondaryUseActive() && context.getHand() == InteractionHand.MAIN_HAND) {
-            if (stack.getTag() != null) {
+            if (hasStoredData(stack)) {
                 player.level.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5F, 0.3F);
-                stack.setTag(null);
+                clearStoredData(stack);
             }
             return true;
         }
@@ -93,17 +107,16 @@ public class RedprintItem extends ItemCoFH implements IPlacementItem {
             return false;
         }
         if (tile instanceof IConveyableData conveyableTile) {
-            if (stack.getTag() == null && context.getHand() == InteractionHand.MAIN_HAND) {
-                conveyableTile.writeConveyableData(player, stack.getOrCreateTag());
+            if (!hasStoredData(stack) && context.getHand() == InteractionHand.MAIN_HAND) {
+                conveyableTile.writeConveyableData(player, CoFHItemData.getTag(stack));
                 tile.setChanged();
-                if (stack.getTag().isEmpty()) {
-                    stack.setTag(null);
+                if (!hasStoredData(stack)) {
                     return false;
                 } else {
                     player.level.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5F, 0.7F);
                 }
-            } else if (stack.hasTag()) {
-                conveyableTile.readConveyableData(player, stack.getTag());
+            } else if (hasStoredData(stack)) {
+                conveyableTile.readConveyableData(player, CoFHItemData.getTag(stack));
                 player.level.playSound(null, player.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5F, 0.8F);
                 return true;
             }
@@ -136,10 +149,10 @@ public class RedprintItem extends ItemCoFH implements IPlacementItem {
 
         ItemStack stack = player.getItemInHand(hand);
         if (player.isSecondaryUseActive()) {
-            if (stack.getTag() != null) {
+            if (hasStoredData(stack)) {
                 player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 0.5F, 0.3F);
             }
-            stack.setTag(null);
+            clearStoredData(stack);
         }
         player.swing(hand);
         return InteractionResultHolder.success(stack);

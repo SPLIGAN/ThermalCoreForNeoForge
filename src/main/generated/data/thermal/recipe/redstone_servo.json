@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    " R ",
+    " I ",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:redstone_servo"
+  }
+}

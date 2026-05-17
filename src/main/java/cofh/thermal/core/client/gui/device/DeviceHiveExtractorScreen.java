@@ -12,7 +12,7 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 public class DeviceHiveExtractorScreen extends AugmentableTileScreen<DeviceHiveExtractorMenu> {
 
     public static final String TEX_PATH = ID_THERMAL + ":textures/gui/container/hive_extractor.png";
-    public static final ResourceLocation TEXTURE = new ResourceLocation(TEX_PATH);
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(TEX_PATH);
 
     public DeviceHiveExtractorScreen(DeviceHiveExtractorMenu container, Inventory inv, Component titleIn) {
 

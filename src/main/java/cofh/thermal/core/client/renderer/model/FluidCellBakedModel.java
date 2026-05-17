@@ -129,7 +129,7 @@ public class FluidCellBakedModel extends UnderlayBakedModel implements IDynamicB
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel worldIn, @Nullable LivingEntity entityIn, int seed) {
 
-            CompoundTag tag = stack.getTagElement(TAG_BLOCK_ENTITY);
+            CompoundTag tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
             byte[] sideConfigRaw = getSideConfigRaw(tag);
             int itemHash = new ComparableItemStack(stack).hashCode();
             int level = getLevel(stack);
@@ -229,7 +229,7 @@ public class FluidCellBakedModel extends UnderlayBakedModel implements IDynamicB
         if (tanks.isEmpty()) {
             return FluidStack.EMPTY;
         }
-        return FluidStack.loadFluidStackFromNBT(tanks.getCompound(0));
+        return FluidStack.parseOptional(cofh.lib.util.CoFHRegistryLookup.registries(), tanks.getCompound(0));
     }
 
     private byte[] getSideConfigRaw(CompoundTag tag) {

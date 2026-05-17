@@ -12,8 +12,8 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 
 public class BlitzRenderer extends MobRenderer<Blitz, BlitzModel<Blitz>> {
 
-    private static final ResourceLocation CALM_TEXTURE = new ResourceLocation(ID_THERMAL, "textures/entity/blitz.png");
-    private static final ResourceLocation ANGRY_TEXTURE = new ResourceLocation(ID_THERMAL, "textures/entity/blitz_angry.png");
+    private static final ResourceLocation CALM_TEXTURE = ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "textures/entity/blitz.png");
+    private static final ResourceLocation ANGRY_TEXTURE = ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "textures/entity/blitz_angry.png");
 
     public BlitzRenderer(EntityRendererProvider.Context ctx) {
 

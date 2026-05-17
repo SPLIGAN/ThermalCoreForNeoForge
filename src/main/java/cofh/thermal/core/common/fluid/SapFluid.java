@@ -34,7 +34,7 @@ public class SapFluid extends FluidCoFH {
 
         super(FLUIDS, ID_FLUID_SAP);
 
-        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_SAP), () -> new BucketItem(stillFluid, itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
+        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_SAP), () -> new BucketItem(stillFluid.get(), itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
     }
 
     @Override
@@ -61,8 +61,8 @@ public class SapFluid extends FluidCoFH {
             consumer.accept(new IClientFluidTypeExtensions() {
 
                 private static final ResourceLocation
-                        STILL = new ResourceLocation("thermal:block/fluids/sap_still"),
-                        FLOW = new ResourceLocation("thermal:block/fluids/sap_flow");
+                        STILL = ResourceLocation.fromNamespaceAndPath("thermal", "block/fluids/sap_still"),
+                        FLOW = ResourceLocation.fromNamespaceAndPath("thermal", "block/fluids/sap_flow");
 
                 @Override
                 public ResourceLocation getStillTexture() {

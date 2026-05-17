@@ -5,11 +5,9 @@ import cofh.thermal.core.ThermalCore;
 import cofh.thermal.core.util.recipes.dynamo.GourmandFuel;
 import cofh.thermal.lib.util.managers.SingleItemFuelManager;
 import cofh.thermal.lib.util.recipes.internal.IDynamoFuel;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -72,24 +70,24 @@ public class GourmandFuelManager extends SingleItemFuelManager {
         if (stack.getItem().hasCraftingRemainingItem(stack)) {
             return 0;
         }
-        FoodProperties food = stack.getItem().getFoodProperties();
+        FoodProperties food = stack.getItem().getFoodProperties(stack, null);
         if (food == null) {
             return 0;
         }
-        int energy = food.getNutrition() * DEFAULT_ENERGY;
+        int energy = food.nutrition() * DEFAULT_ENERGY;
 
-        if (food.getEffects().size() > 0) {
-            for (Pair<MobEffectInstance, Float> effect : food.getEffects()) {
-                if (effect.getFirst().getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+        if (!food.effects().isEmpty()) {
+            for (FoodProperties.PossibleEffect effect : food.effects()) {
+                if (effect.effect().getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
                     return 0;
                 }
             }
             energy *= 2;
         }
-        if (food.getSaturationModifier() > 1.0F) {
+        if (food.nutrition() > 0 && food.saturation() > food.nutrition()) {
             energy *= 4;
         }
-        if (food.isFastFood()) {
+        if (food.eatSeconds() < 1.6F) {
             energy *= 2;
         }
         return energy >= MIN_ENERGY ? energy : 0;
@@ -100,9 +98,9 @@ public class GourmandFuelManager extends SingleItemFuelManager {
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        var recipes = recipeManager.byType(GOURMAND_FUEL.get());
-        for (var entry : recipes.entrySet()) {
-            addFuel(entry.getValue().value());
+        var recipes = recipeManager.getAllRecipesFor(GOURMAND_FUEL.get());
+        for (var holder : recipes) {
+            addFuel(holder.value());
         }
         createConvertedRecipes(recipeManager);
     }
@@ -133,7 +131,7 @@ public class GourmandFuelManager extends SingleItemFuelManager {
 
     protected RecipeHolder<GourmandFuel> convert(ItemStack item, int energy) {
 
-        return new RecipeHolder<>(new ResourceLocation(ID_THERMAL, "gourmand_" + getName(item)), new GourmandFuel(energy, singletonList(Ingredient.of(item)), emptyList()));
+        return new RecipeHolder<>(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "gourmand_" + getName(item)), new GourmandFuel(energy, singletonList(Ingredient.of(item)), emptyList()));
     }
     // endregion
 }

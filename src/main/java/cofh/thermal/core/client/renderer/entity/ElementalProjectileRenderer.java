@@ -41,7 +41,7 @@ public abstract class ElementalProjectileRenderer<T extends ElementalProjectile>
         poseStackIn.scale(0.5F, 0.5F, 0.5F);
         this.model.setupAnim(entityIn, 0.0F, 0.0F, 0.0F, f, f1);
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(getRenderType(entityIn));
-        this.model.renderToBuffer(poseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.renderToBuffer(poseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, -1);
         poseStackIn.popPose();
 
         super.render(entityIn, entityYaw, partialTicks, poseStackIn, bufferIn, packedLightIn);

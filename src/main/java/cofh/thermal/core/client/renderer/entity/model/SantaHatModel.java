@@ -19,8 +19,8 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 public class SantaHatModel<T extends Entity> extends EntityModel<T> {
 
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation HAT_LAYER = new ModelLayerLocation(new ResourceLocation("thermal:santa_hat"), "main");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ID_THERMAL + ":textures/entity/santa_hat.png");
+    public static final ModelLayerLocation HAT_LAYER = new ModelLayerLocation(ResourceLocation.parse("thermal:santa_hat"), "main");
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(ID_THERMAL + ":textures/entity/santa_hat.png");
 
     private final ModelPart hat;
 
@@ -51,9 +51,9 @@ public class SantaHatModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
 
-        hat.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        hat.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
 
 }

@@ -23,7 +23,11 @@ import cofh.thermal.core.common.fluid.RedstoneFluid;
 import cofh.thermal.core.init.registries.*;
 import cofh.thermal.lib.util.ThermalProxy;
 import cofh.thermal.lib.util.ThermalProxyClient;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -55,7 +59,6 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
@@ -68,6 +71,13 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 import static cofh.thermal.core.init.registries.TCoreEntities.*;
 import static cofh.thermal.core.init.registries.TCoreMenus.*;
 import static cofh.thermal.lib.util.ThermalFlags.*;
+import cofh.thermal.core.client.ThermalTextures;
+import cofh.thermal.core.client.event.TCoreClientEvents;
+import cofh.thermal.core.client.event.TCoreClientSetupEvents;
+import cofh.thermal.core.common.event.TCoreCommonEvents;
+import cofh.thermal.core.common.event.TCoreCommonSetupEvents;
+import cofh.thermal.core.init.data.TCoreDataGen;
+
 import static cofh.thermal.lib.util.ThermalIDs.ID_TINKER_BENCH;
 
 @Mod (ID_THERMAL)
@@ -94,7 +104,7 @@ public class ThermalCore {
     public static final DeferredRegisterCoFH<PlacementModifierType<?>> PLACEMENT_MODIFIERS = DeferredRegisterCoFH.create(Registries.PLACEMENT_MODIFIER_TYPE, ID_THERMAL);
 
     public static final DeferredRegisterCoFH<FluidType> FLUID_TYPES = DeferredRegisterCoFH.create(NeoForgeRegistries.Keys.FLUID_TYPES, ID_THERMAL);
-    public static final DeferredRegisterCoFH<Codec<? extends IGlobalLootModifier>> LOOT_SERIALIZERS = DeferredRegisterCoFH.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ID_THERMAL);
+    public static final DeferredRegisterCoFH<MapCodec<? extends IGlobalLootModifier>> LOOT_SERIALIZERS = DeferredRegisterCoFH.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ID_THERMAL);
 
     public ThermalCore(ModContainer modContainer, IEventBus modEventBus) {
 
@@ -117,6 +127,16 @@ public class ThermalCore {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::registrySetup);
+
+        modEventBus.register(TCoreDataGen.class);
+        NeoForge.EVENT_BUS.register(TCoreCommonSetupEvents.class);
+        NeoForge.EVENT_BUS.register(TCoreCommonEvents.class);
+
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            modEventBus.register(TCoreClientSetupEvents.class);
+            modEventBus.register(ThermalTextures.class);
+            NeoForge.EVENT_BUS.register(TCoreClientEvents.class);
+        }
 
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
@@ -223,11 +243,11 @@ public class ThermalCore {
         event.registerEntityRenderer(BLIZZ_PROJECTILE.get(), BlizzProjectileRenderer::new);
     }
 
-    private void spawnPlacementSetup(final SpawnPlacementRegisterEvent event) {
+    private void spawnPlacementSetup(final RegisterSpawnPlacementsEvent event) {
 
-        event.register(BASALZ.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Basalz::canSpawn, SpawnPlacementRegisterEvent.Operation.REPLACE);
-        event.register(BLITZ.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Blitz::canSpawn, SpawnPlacementRegisterEvent.Operation.REPLACE);
-        event.register(BLIZZ.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Blizz::canSpawn, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(BASALZ.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Basalz::canSpawn, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(BLITZ.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Blitz::canSpawn, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(BLIZZ.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Blizz::canSpawn, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
     private void capabilitySetup(RegisterCapabilitiesEvent event) {

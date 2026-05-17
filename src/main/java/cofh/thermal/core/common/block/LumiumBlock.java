@@ -3,7 +3,7 @@ package cofh.thermal.core.common.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -32,8 +32,8 @@ public class LumiumBlock extends Block {
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
 
         if (entityIn instanceof LivingEntity mob) {
-            if (mob.getMobType() == MobType.UNDEAD) {
-                mob.setSecondsOnFire(duration);
+            if (mob.getType().is(EntityTypeTags.UNDEAD)) {
+                mob.igniteForSeconds(duration);
             }
         }
     }

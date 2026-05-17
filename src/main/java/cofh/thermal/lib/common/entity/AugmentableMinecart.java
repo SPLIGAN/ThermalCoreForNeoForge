@@ -31,6 +31,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -78,11 +79,9 @@ public abstract class AugmentableMinecart extends AbstractMinecartCoFH implement
 
         super.onPlaced(stack);
 
-        CompoundTag nbt = stack.getTag();
-        if (nbt != null) {
-            if (nbt.contains(TAG_AUGMENTS)) {
-                inventory.readSlotsUnordered(nbt.getList(TAG_AUGMENTS, TAG_COMPOUND), invSize() - augSize());
-            }
+        CompoundTag nbt = cofh.lib.util.CoFHItemData.getTag(stack);
+        if (nbt.contains(TAG_AUGMENTS)) {
+            inventory.readSlotsUnordered(nbt.getList(TAG_AUGMENTS, TAG_COMPOUND), invSize() - augSize());
         }
         updateAugmentState();
 
@@ -92,7 +91,7 @@ public abstract class AugmentableMinecart extends AbstractMinecartCoFH implement
     @Override
     public ItemStack createItemStackTag(ItemStack stack) {
 
-        CompoundTag nbt = stack.getOrCreateTag();
+        CompoundTag nbt = cofh.lib.util.CoFHItemData.getTag(stack);
 
         if (ThermalCoreConfig.keepAugments.get() && augSize() > 0) {
             getItemInv().writeSlotsToNBTUnordered(nbt, TAG_AUGMENTS, invSize() - augSize());
@@ -123,8 +122,6 @@ public abstract class AugmentableMinecart extends AbstractMinecartCoFH implement
     public void addAdditionalSaveData(CompoundTag compound) {
 
         super.addAdditionalSaveData(compound);
-
-        compound.put(TAG_ENCHANTMENTS, enchantments);
 
         inventory.write(compound);
         filter.write(compound);
@@ -194,7 +191,7 @@ public abstract class AugmentableMinecart extends AbstractMinecartCoFH implement
             }
             setAttributesFromAugment(augmentData);
         }
-        finalizeAttributes(EnchantmentHelper.deserializeEnchantments(enchantments));
+        finalizeAttributes(enchantmentMapFrom(cartEnchantments));
         augmentNBT = null;
     }
 
@@ -233,6 +230,15 @@ public abstract class AugmentableMinecart extends AbstractMinecartCoFH implement
     }
 
     protected abstract void finalizeAttributes(Map<Enchantment, Integer> enchantmentMap);
+
+    private static Map<Enchantment, Integer> enchantmentMapFrom(net.minecraft.world.item.enchantment.ItemEnchantments ench) {
+
+        Map<Enchantment, Integer> map = new HashMap<>();
+        for (var entry : ench.entrySet()) {
+            map.put(entry.getKey().value(), entry.getIntValue());
+        }
+        return map;
+    }
     // endregion
 
     // region IStorageCallback

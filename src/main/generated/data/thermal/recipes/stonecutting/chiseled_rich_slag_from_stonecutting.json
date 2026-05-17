@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "thermal:polished_rich_slag"
-  },
-  "result": "thermal:chiseled_rich_slag"
-}

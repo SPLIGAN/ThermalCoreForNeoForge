@@ -1,0 +1,46 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_at_least_9_potato": {
+      "conditions": {
+        "items": [
+          {
+            "count": {
+              "min": 9
+            },
+            "items": "minecraft:potato"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_potato_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thermal:potato_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:storage/potato_from_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_at_least_9_potato",
+      "has_potato_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:storage/potato_from_block"
+    ]
+  }
+}

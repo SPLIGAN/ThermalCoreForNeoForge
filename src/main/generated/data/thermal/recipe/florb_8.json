@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:sawdust"
+    },
+    {
+      "tag": "c:slag"
+    },
+    [
+      {
+        "tag": "c:rosin"
+      },
+      {
+        "tag": "c:slimeballs"
+      }
+    ]
+  ],
+  "result": {
+    "count": 8,
+    "id": "thermal:florb"
+  }
+}

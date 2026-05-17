@@ -23,8 +23,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.IPlantable;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.CropBlock;
 import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.player.BonemealEvent;
 
 import javax.annotation.Nullable;
 
@@ -67,9 +70,9 @@ public class FertilizerItem extends ItemCoFH {
         BlockState state = world.getBlockState(pos);
         Player player = context.getPlayer();
         if (player != null) {
-            int hook = EventHooks.onApplyBonemeal(player, world, pos, state, stack);
-            if (hook != 0) {
-                return hook > 0;
+            BonemealEvent event = EventHooks.fireBonemealEvent(player, world, pos, state, stack);
+            if (event.isCanceled()) {
+                return event.isSuccessful();
             }
         }
         boolean used;
@@ -166,7 +169,8 @@ public class FertilizerItem extends ItemCoFH {
 
     protected static void makeAreaOfEffectCloud(Level world, BlockPos pos, int radius) {
 
-        boolean isPlant = world.getBlockState(pos).getBlock() instanceof IPlantable;
+        var state = world.getBlockState(pos);
+        boolean isPlant = state.getBlock() instanceof CropBlock || state.getBlock() instanceof BushBlock || state.is(BlockTags.CROPS);
         AreaEffectCloud cloud = new AreaEffectCloud(world, pos.getX() + 0.5D, pos.getY() + (isPlant ? 0.0D : 1.0D), pos.getZ() + 0.5D);
         cloud.setRadius(1);
         cloud.setParticle(ParticleTypes.HAPPY_VILLAGER);

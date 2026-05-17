@@ -34,7 +34,7 @@ public class CreosoteFluid extends FluidCoFH {
 
         super(FLUIDS, ID_FLUID_CREOSOTE);
 
-        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_CREOSOTE), () -> new BucketItem(stillFluid, itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
+        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_CREOSOTE), () -> new BucketItem(stillFluid.get(), itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
     }
 
     @Override
@@ -61,8 +61,8 @@ public class CreosoteFluid extends FluidCoFH {
             consumer.accept(new IClientFluidTypeExtensions() {
 
                 private static final ResourceLocation
-                        STILL = new ResourceLocation("thermal:block/fluids/creosote_still"),
-                        FLOW = new ResourceLocation("thermal:block/fluids/creosote_flow");
+                        STILL = ResourceLocation.parse("thermal:block/fluids/creosote_still"),
+                        FLOW = ResourceLocation.parse("thermal:block/fluids/creosote_flow");
 
                 @Override
                 public ResourceLocation getStillTexture() {

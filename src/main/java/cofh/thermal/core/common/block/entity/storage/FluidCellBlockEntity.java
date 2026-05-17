@@ -146,7 +146,7 @@ public class FluidCellBlockEntity extends StorageCellBlockEntity implements ITic
         if (adjTile != null) {
             var handler = getFluidHandlerCap(adjTile, side.getOpposite());
             if (handler != null) {
-                fluidStorage.modify(-handler.fill(new FluidStack(fluidStorage.getFluidStack(), Math.min(amountOutput, fluidStorage.getAmount())), EXECUTE));
+                fluidStorage.modify(-handler.fill(fluidStorage.getFluidStack().copyWithAmount(Math.min(amountOutput, fluidStorage.getAmount())), EXECUTE));
             }
         }
     }
@@ -191,7 +191,7 @@ public class FluidCellBlockEntity extends StorageCellBlockEntity implements ITic
     @Override
     protected void updateTrackers(boolean send) {
 
-        renderFluid = new FluidStack(fluidStorage.getFluidStack(), BUCKET_VOLUME);
+        renderFluid = fluidStorage.getFluidStack().copyWithAmount(BUCKET_VOLUME);
 
         int curScale = fluidStorage.getAmount() > 0 ? 1 + (int) (fluidStorage.getRatio() * 14) : 0;
         if (curScale != compareTracker) {

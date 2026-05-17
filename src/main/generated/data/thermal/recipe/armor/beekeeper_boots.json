@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:beekeeper_armor"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "tag": "c:leathers"
+    },
+    "X": {
+      "item": "thermal:beekeeper_fabric"
+    }
+  },
+  "pattern": [
+    "X X",
+    "L L"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:beekeeper_boots"
+  }
+}

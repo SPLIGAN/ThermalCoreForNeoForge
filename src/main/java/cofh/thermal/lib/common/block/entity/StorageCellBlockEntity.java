@@ -4,7 +4,9 @@ import cofh.core.util.control.*;
 import cofh.lib.util.helpers.MathHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -65,12 +67,14 @@ public abstract class StorageCellBlockEntity extends AugmentableBlockEntity impl
     @Override
     public ItemStack createItemStackTag(ItemStack stack) {
 
-        CompoundTag nbt = stack.getOrCreateTagElement(TAG_BLOCK_ENTITY);
+        stack = super.createItemStackTag(stack);
+        CompoundTag nbt = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY).copyTag();
 
         nbt.putInt(TAG_AMOUNT_IN, amountInput);
         nbt.putInt(TAG_AMOUNT_OUT, amountOutput);
 
-        return super.createItemStackTag(stack);
+        stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(nbt));
+        return stack;
     }
 
     public abstract int getMaxInput();
@@ -118,9 +122,9 @@ public abstract class StorageCellBlockEntity extends AugmentableBlockEntity impl
 
     // region NETWORK
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, net.minecraft.core.HolderLookup.Provider registries) {
 
-        super.onDataPacket(net, pkt);
+        super.onDataPacket(net, pkt, registries);
 
         level.getChunkSource().getLightEngine().checkBlock(worldPosition);
         if (level != null) {
@@ -235,9 +239,9 @@ public abstract class StorageCellBlockEntity extends AugmentableBlockEntity impl
 
     // region NBT
     @Override
-    public void load(CompoundTag nbt) {
+    protected void loadAdditional(CompoundTag nbt, net.minecraft.core.HolderLookup.Provider registries) {
 
-        super.load(nbt);
+        super.loadAdditional(nbt, registries);
 
         reconfigControl.setFacing(Direction.from3DDataValue(nbt.getByte(TAG_FACING)));
         reconfigControl.read(nbt);
@@ -251,9 +255,9 @@ public abstract class StorageCellBlockEntity extends AugmentableBlockEntity impl
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt, net.minecraft.core.HolderLookup.Provider registries) {
 
-        super.saveAdditional(nbt);
+        super.saveAdditional(nbt, registries);
 
         nbt.putByte(TAG_FACING, (byte) reconfigControl.getFacing().get3DDataValue());
         reconfigControl.write(nbt);

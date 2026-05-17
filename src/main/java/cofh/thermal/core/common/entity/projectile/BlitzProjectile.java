@@ -73,7 +73,7 @@ public class BlitzProjectile extends ElementalProjectile {
 
         Entity entity = result.getEntity();
         if (entity.hurt(this.damageSource(), getDamage(entity)) && entity instanceof LivingEntity living) {
-            living.addEffect(new MobEffectInstance(SHOCKED.get(), getEffectDuration(entity), getEffectAmplifier(entity), false, false));
+            living.addEffect(new MobEffectInstance(SHOCKED, getEffectDuration(entity), getEffectAmplifier(entity), false, false));
         }
     }
 

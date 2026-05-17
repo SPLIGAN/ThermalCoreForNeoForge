@@ -116,7 +116,7 @@ public class DeviceWaterGenBlockEntity extends DeviceBlockEntity implements ITic
         if (!fillSlot.isEmpty()) {
             var handler = fillSlot.getItemStack().getCapability(Capabilities.FluidHandler.ITEM);
             if (handler != null) {
-                tank.drain(handler.fill(new FluidStack(tank.getFluidStack(), (int) (BUCKET_VOLUME * baseMod)), EXECUTE), EXECUTE);
+                tank.drain(handler.fill(tank.getFluidStack().copyWithAmount((int) (BUCKET_VOLUME * baseMod)), EXECUTE), EXECUTE);
                 fillSlot.setItemStack(handler.getContainer());
             }
         }

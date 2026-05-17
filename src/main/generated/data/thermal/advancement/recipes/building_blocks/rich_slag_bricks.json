@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rich_slag": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thermal:rich_slag"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:rich_slag_bricks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_rich_slag"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:rich_slag_bricks"
+    ]
+  }
+}

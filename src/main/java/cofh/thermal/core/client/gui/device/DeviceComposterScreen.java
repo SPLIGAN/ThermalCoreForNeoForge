@@ -14,7 +14,7 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 public class DeviceComposterScreen extends AugmentableTileScreen<DeviceComposterMenu> {
 
     public static final String TEX_PATH = ID_THERMAL + ":textures/gui/container/composter.png";
-    public static final ResourceLocation TEXTURE = new ResourceLocation(TEX_PATH);
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(TEX_PATH);
 
     public DeviceComposterScreen(DeviceComposterMenu container, Inventory inv, Component titleIn) {
 

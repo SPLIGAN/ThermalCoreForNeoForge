@@ -11,6 +11,7 @@ import cofh.lib.common.inventory.ItemStorageCoFH;
 import cofh.thermal.lib.util.recipes.IThermalInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
@@ -219,9 +220,9 @@ public abstract class Reconfigurable4WayBlockEntity extends AugmentableBlockEnti
 
     // region NETWORK
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, net.minecraft.core.HolderLookup.Provider registries) {
 
-        super.onDataPacket(net, pkt);
+        super.onDataPacket(net, pkt, registries);
 
         if (level != null) {
             level.getModelDataManager().requestRefresh(this);
@@ -267,9 +268,9 @@ public abstract class Reconfigurable4WayBlockEntity extends AugmentableBlockEnti
 
     // region NBT
     @Override
-    public void load(CompoundTag nbt) {
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 
-        super.load(nbt);
+        super.loadAdditional(nbt, registries);
 
         reconfigControl.setFacing(Direction.from3DDataValue(nbt.getByte(TAG_FACING)));
         reconfigControl.read(nbt);
@@ -282,9 +283,9 @@ public abstract class Reconfigurable4WayBlockEntity extends AugmentableBlockEnti
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 
-        super.saveAdditional(nbt);
+        super.saveAdditional(nbt, registries);
 
         nbt.putByte(TAG_FACING, (byte) reconfigControl.getFacing().get3DDataValue());
         reconfigControl.write(nbt);

@@ -8,7 +8,7 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 
 public class BasalzProjectileRenderer extends ElementalProjectileRenderer<BasalzProjectile> {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ID_THERMAL + ":textures/entity/basalz_projectile.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(ID_THERMAL + ":textures/entity/basalz_projectile.png");
 
     public BasalzProjectileRenderer(EntityRendererProvider.Context ctx) {
 

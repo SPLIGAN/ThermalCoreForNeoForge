@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:machine_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:plates/electrum"
+    },
+    "L": {
+      "tag": "c:gears/lead"
+    },
+    "X": {
+      "item": "thermal:rf_coil"
+    }
+  },
+  "pattern": [
+    " L ",
+    "EXE",
+    " L "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:machine_speed_augment"
+  }
+}

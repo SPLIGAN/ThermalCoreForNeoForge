@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "tag": "c:gunpowders"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "tag": "c:sands"
+    }
+  },
+  "pattern": [
+    "GPG",
+    "PIP",
+    "GPG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "thermal:explosive_grenade"
+  }
+}

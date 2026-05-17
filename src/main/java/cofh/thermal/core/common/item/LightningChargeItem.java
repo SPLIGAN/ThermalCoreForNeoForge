@@ -44,7 +44,7 @@ public class LightningChargeItem extends ItemCoFH {
         if (world.canSeeSky(pos)) {
             if (world instanceof ServerLevel) {
                 if (player != null) {
-                    player.addEffect(new MobEffectInstance(LIGHTNING_RESISTANCE.get(), 20, 0, false, false, false));
+                    player.addEffect(new MobEffectInstance(LIGHTNING_RESISTANCE, 20, 0, false, false, false));
                 }
                 Utils.spawnLightningBolt(world, pos, player);
                 // world.addFreshEntity(new ElectricArcEntity(world, Vec3.atBottomCenterOf(pos)).setOwner(player));

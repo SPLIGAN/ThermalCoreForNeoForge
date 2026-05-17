@@ -16,7 +16,9 @@ import cofh.thermal.lib.util.recipes.internal.IMachineRecipe;
 import cofh.thermal.lib.util.recipes.internal.SimpleMachineRecipe;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -151,9 +153,9 @@ public class BrewerRecipeManager extends AbstractManager implements IRecipeManag
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        var recipes = recipeManager.byType(BREWER_RECIPE.get());
-        for (var entry : recipes.entrySet()) {
-            addRecipe(entry.getValue().value());
+        var recipes = recipeManager.getAllRecipesFor(BREWER_RECIPE.get());
+        for (var holder : recipes) {
+            addRecipe(holder.value());
         }
 
         if (defaultPotionRecipes) {
@@ -177,8 +179,9 @@ public class BrewerRecipeManager extends AbstractManager implements IRecipeManag
 
     protected void createConvertedRecipes() {
 
-        for (PotionBrewing.Mix<Potion> mix : PotionBrewing.POTION_MIXES) {
-            createConvertedRecipe(mix.from, mix.ingredient, mix.to);
+        PotionBrewing brewing = PotionBrewing.bootstrap(FeatureFlags.VANILLA_SET, RegistryAccess.EMPTY);
+        for (PotionBrewing.Mix<Potion> mix : brewing.potionMixes) {
+            createConvertedRecipe(mix.from().value(), mix.ingredient(), mix.to().value());
         }
     }
 
@@ -193,7 +196,7 @@ public class BrewerRecipeManager extends AbstractManager implements IRecipeManag
 
     protected RecipeHolder<BrewerRecipe> convert(Potion inputPotion, Ingredient reagent, Potion outputPotion) {
 
-        return new RecipeHolder<>(new ResourceLocation(ID_THERMAL, "brewer_" + inputPotion.hashCode()),
+        return new RecipeHolder<>(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "brewer_" + inputPotion.hashCode()),
                 new BrewerRecipe(defaultEnergy, 0.0F,
                         Collections.singletonList(reagent),
                         Collections.singletonList(FluidIngredient.of(PotionFluid.getPotionAsFluid(defaultPotion, inputPotion))),

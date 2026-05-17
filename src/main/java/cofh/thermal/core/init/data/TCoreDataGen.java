@@ -5,7 +5,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
@@ -13,7 +12,6 @@ import java.util.concurrent.CompletableFuture;
 
 import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 
-@Mod.EventBusSubscriber (bus = Mod.EventBusSubscriber.Bus.MOD, modid = ID_THERMAL)
 public class TCoreDataGen {
 
     @SubscribeEvent
@@ -34,7 +32,7 @@ public class TCoreDataGen {
         gen.addProvider(event.includeServer(), new TCoreTagsProvider.DamageType(output, lookup, exFileHelper));
 
         // gen.addProvider(event.includeServer(), new TCoreAdvancementProvider(gen));
-        gen.addProvider(event.includeServer(), new TCoreLootTableProvider(output));
+        gen.addProvider(event.includeServer(), new TCoreLootTableProvider(output, lookup));
         gen.addProvider(event.includeServer(), new TCoreRecipeProvider(output));
 
         gen.addProvider(event.includeClient(), new TCoreBlockStateProvider(output, exFileHelper));

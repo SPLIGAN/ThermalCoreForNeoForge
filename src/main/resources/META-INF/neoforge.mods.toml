@@ -1,0 +1,44 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+issueTrackerURL = "https://github.com/cofh/feedback"
+license = "CoFH - Don't Be A Jerk (Learn, Don't Steal)"
+
+[[accessTransformers]]
+file = "META-INF/accesstransformer.cfg"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+updateJSONURL = "https://raw.github.com/cofh/version/main/thermal/update.json"
+displayURL = "https://teamcofh.com/"
+logoFile = "thermal_series.png"
+itemIcon = "thermal:tinker_bench"
+credits = "Team CoFH"
+authors = "King Lemming"
+description = '''
+Parent mod for all Thermal modules.
+
+Contains all of the common components for the Thermal Series, such as materials and basic tools.
+'''
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neo_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "cofh_core"
+type = "required"
+versionRange = "[${cofh_core_version},${cofh_core_max_version})"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_signalum_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/signalum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_signalum_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/signalum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:fire_charge/signalum_glass_2"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_signalum_dust",
+      "has_signalum_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:fire_charge/signalum_glass_2"
+    ]
+  }
+}

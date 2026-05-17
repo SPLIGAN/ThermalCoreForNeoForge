@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:machine_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:gears/bronze"
+    },
+    "I": {
+      "tag": "c:plates/invar"
+    },
+    "X": {
+      "item": "thermal:redstone_servo"
+    }
+  },
+  "pattern": [
+    " B ",
+    "IXI",
+    " B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:machine_output_augment"
+  }
+}

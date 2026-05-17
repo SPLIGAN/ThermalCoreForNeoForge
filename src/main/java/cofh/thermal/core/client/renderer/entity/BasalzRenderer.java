@@ -21,8 +21,8 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 
 public class BasalzRenderer extends MobRenderer<Basalz, BasalzModel<Basalz>> {
 
-    private static final ResourceLocation CALM_TEXTURE = new ResourceLocation(ID_THERMAL, "textures/entity/basalz.png");
-    private static final ResourceLocation ANGRY_TEXTURE = new ResourceLocation(ID_THERMAL, "textures/entity/basalz_angry.png");
+    private static final ResourceLocation CALM_TEXTURE = ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "textures/entity/basalz.png");
+    private static final ResourceLocation ANGRY_TEXTURE = ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "textures/entity/basalz_angry.png");
 
     protected ElementalProjectileModel<BasalzProjectile> projectileModel;
 
@@ -60,7 +60,7 @@ public class BasalzRenderer extends MobRenderer<Basalz, BasalzModel<Basalz>> {
                     float invScale = 0.5F / scale;
                     poseStackIn.scale(invScale, invScale, invScale);
                     VertexConsumer builder = bufferIn.getBuffer(projectileModel.renderType(BasalzProjectileRenderer.TEXTURE));
-                    this.projectileModel.renderToBuffer(poseStackIn, builder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.8F);
+                    this.projectileModel.renderToBuffer(poseStackIn, builder, packedLightIn, OverlayTexture.NO_OVERLAY, 0xCCFFFFFF);
                     poseStackIn.popPose();
                     poseStackIn.mulPose(rot);
                 }

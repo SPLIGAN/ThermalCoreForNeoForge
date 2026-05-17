@@ -61,7 +61,7 @@ public class EnderFluid extends FluidCoFH {
         particleColor = new Vector3f(0.035F, 0.215F, 0.333F);
 
         block = BLOCKS.register(fluid(ID_FLUID_ENDER), () -> new FluidBlock(stillFluid, of().mapColor(MapColor.COLOR_CYAN).lightLevel(lightValue(3)).replaceable().noCollission().strength(1200.0F).pushReaction(PushReaction.DESTROY).noLootTable()));
-        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_ENDER), () -> new BucketItem(stillFluid, itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
+        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_ENDER), () -> new BucketItem(stillFluid.get(), itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
     }
 
     @Override
@@ -92,8 +92,8 @@ public class EnderFluid extends FluidCoFH {
             consumer.accept(new IClientFluidTypeExtensions() {
 
                 private static final ResourceLocation
-                        STILL = new ResourceLocation("thermal:block/fluids/ender_still"),
-                        FLOW = new ResourceLocation("thermal:block/fluids/ender_flow");
+                        STILL = ResourceLocation.parse("thermal:block/fluids/ender_still"),
+                        FLOW = ResourceLocation.parse("thermal:block/fluids/ender_flow");
 
                 @Override
                 public ResourceLocation getStillTexture() {
@@ -151,7 +151,7 @@ public class EnderFluid extends FluidCoFH {
 
         public FluidBlock(Supplier<? extends FlowingFluid> fluidSup, Properties properties) {
 
-            super(fluidSup, properties);
+            super(fluidSup.get(), properties);
         }
 
         @Override

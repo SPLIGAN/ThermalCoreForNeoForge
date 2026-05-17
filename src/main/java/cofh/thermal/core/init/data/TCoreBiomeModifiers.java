@@ -53,15 +53,15 @@
 //
 //        HolderSet<Biome> blizzSnowy = biomeRegistry.getOrCreateTag(Tags.Biomes.IS_SNOWY);
 //
-//        map.put(new ResourceLocation(ID_THERMAL, "basalz_spawn_basalt_deltas"), addMobToBiomes(basalzBasaltDelta, TCoreEntities.BASALZ.get(), 50, 2, 4));
-//        map.put(new ResourceLocation(ID_THERMAL, "basalz_spawn_caves"), addMobToBiomes(basalzCaves, TCoreEntities.BASALZ.get(), 25, 1, 3));
-//        map.put(new ResourceLocation(ID_THERMAL, "basalz_spawn_peaks"), addMobToBiomes(basalzPeaks, TCoreEntities.BASALZ.get(), 35, 1, 3));
+//        map.put(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "basalz_spawn_basalt_deltas"), addMobToBiomes(basalzBasaltDelta, TCoreEntities.BASALZ.get(), 50, 2, 4));
+//        map.put(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "basalz_spawn_caves"), addMobToBiomes(basalzCaves, TCoreEntities.BASALZ.get(), 25, 1, 3));
+//        map.put(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "basalz_spawn_peaks"), addMobToBiomes(basalzPeaks, TCoreEntities.BASALZ.get(), 35, 1, 3));
 //
-//        map.put(new ResourceLocation(ID_THERMAL, "blitz_spawn_badlands"), addMobToBiomes(blitzBadlands, TCoreEntities.BLITZ.get(), 35, 1, 3));
-//        map.put(new ResourceLocation(ID_THERMAL, "blitz_spawn_sandy"), addMobToBiomes(blitzSandy, TCoreEntities.BLITZ.get(), 25, 1, 3));
-//        map.put(new ResourceLocation(ID_THERMAL, "blitz_spawn_savanna"), addMobToBiomes(blitzSavanna, TCoreEntities.BLITZ.get(), 50, 2, 4));
+//        map.put(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "blitz_spawn_badlands"), addMobToBiomes(blitzBadlands, TCoreEntities.BLITZ.get(), 35, 1, 3));
+//        map.put(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "blitz_spawn_sandy"), addMobToBiomes(blitzSandy, TCoreEntities.BLITZ.get(), 25, 1, 3));
+//        map.put(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "blitz_spawn_savanna"), addMobToBiomes(blitzSavanna, TCoreEntities.BLITZ.get(), 50, 2, 4));
 //
-//        map.put(new ResourceLocation(ID_THERMAL, "blizz_spawn_snowy"), addMobToBiomes(blizzSnowy, TCoreEntities.BLIZZ.get(), 50, 1, 4));
+//        map.put(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "blizz_spawn_snowy"), addMobToBiomes(blizzSnowy, TCoreEntities.BLIZZ.get(), 50, 1, 4));
 //    }
 //
 //}

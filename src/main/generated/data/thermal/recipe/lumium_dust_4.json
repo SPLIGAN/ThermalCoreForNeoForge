@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:dusts/tin"
+    },
+    {
+      "tag": "c:dusts/tin"
+    },
+    {
+      "tag": "c:dusts/tin"
+    },
+    {
+      "tag": "c:dusts/silver"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "thermal:lumium_dust"
+  }
+}

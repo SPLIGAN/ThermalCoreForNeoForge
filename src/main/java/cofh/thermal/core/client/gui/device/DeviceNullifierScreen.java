@@ -15,7 +15,7 @@ import static cofh.lib.util.helpers.SoundHelper.playClickSound;
 public class DeviceNullifierScreen extends AugmentableTileScreen<DeviceNullifierMenu> {
 
     public static final String TEX_PATH = ID_THERMAL + ":textures/gui/container/nullifier.png";
-    public static final ResourceLocation TEXTURE = new ResourceLocation(TEX_PATH);
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(TEX_PATH);
 
     public static final String TEX_TRASH = ID_THERMAL + ":textures/gui/container/nullifier_empty_bin.png";
 

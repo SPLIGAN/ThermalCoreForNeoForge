@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "device_nullifier"
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_redstone_servo": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thermal:redstone_servo"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:device_nullifier"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_redstone_servo"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:device_nullifier"
+    ]
+  }
+}

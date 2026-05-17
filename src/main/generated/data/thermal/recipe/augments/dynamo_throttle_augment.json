@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:dynamo_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:ingots/electrum"
+    },
+    "l": {
+      "tag": "c:nuggets/lead"
+    }
+  },
+  "pattern": [
+    " l ",
+    "lEl",
+    " l "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:dynamo_throttle_augment"
+  }
+}

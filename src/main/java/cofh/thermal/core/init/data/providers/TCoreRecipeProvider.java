@@ -96,7 +96,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .requires(fromTags(ItemTagsCoFH.GEMS_NITER, ItemTagsCoFH.DUSTS_NITER))
                 .requires(fromTags(ItemTagsCoFH.GEMS_NITER, ItemTagsCoFH.DUSTS_NITER))
                 .requires(fromTags(ItemTagsCoFH.GEMS_SULFUR, ItemTagsCoFH.DUSTS_SULFUR))
-                .unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
+                .unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
                 .save(recipeOutput, ID_THERMAL + ":gunpowder_4");
 
         generateAlloyRecipes(recipeOutput);
@@ -184,11 +184,11 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(consumer, ID_THERMAL + ":fire_charge/enderium_ingot_2");
 
         ShapelessRecipeBuilder.shapeless(BUILDING_BLOCKS, reg.get("obsidian_glass"), 2)
-                .requires(Tags.Items.OBSIDIAN)
+                .requires(Tags.Items.OBSIDIANS_NORMAL)
                 .requires(fromTags(ItemTagsCoFH.DUSTS_QUARTZ, Tags.Items.GEMS_QUARTZ))
-                .requires(Tags.Items.SAND)
+                .requires(Tags.Items.SANDS)
                 .requires(Items.FIRE_CHARGE)
-                .unlockedBy("has_obsidian", has(Tags.Items.OBSIDIAN))
+                .unlockedBy("has_obsidian", has(Tags.Items.OBSIDIANS_NORMAL))
                 .save(consumer, ID_THERMAL + ":fire_charge/obsidian_glass_2");
 
         ShapelessRecipeBuilder.shapeless(BUILDING_BLOCKS, reg.get("signalum_glass"), 2)
@@ -230,7 +230,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
         Item hazmatFabric = reg.get("hazmat_fabric");
 
         ShapedRecipeBuilder.shaped(MISC, beekeeperFabric)
-                .define('S', Tags.Items.STRING)
+                .define('S', Tags.Items.STRINGS)
                 .define('H', Items.HONEYCOMB)
                 .pattern(" S ")
                 .pattern("SHS")
@@ -266,7 +266,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         result = reg.get(ID_BEEKEEPER_BOOTS);
         ShapedRecipeBuilder.shaped(COMBAT, result)
-                .define('L', Tags.Items.LEATHER)
+                .define('L', Tags.Items.LEATHERS)
                 .define('X', beekeeperFabric)
                 .pattern("X X")
                 .pattern("L L")
@@ -274,7 +274,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BEEKEEPER_ARMOR)), this.modid + ":" + folder + "/" + name(result));
 
         ShapedRecipeBuilder.shaped(MISC, divingFabric)
-                .define('S', Tags.Items.STRING)
+                .define('S', Tags.Items.STRINGS)
                 .define('H', Tags.Items.GEMS_PRISMARINE)
                 .pattern(" S ")
                 .pattern("SHS")
@@ -314,7 +314,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         result = reg.get(ID_DIVING_BOOTS);
         ShapedRecipeBuilder.shaped(COMBAT, result)
-                .define('L', Tags.Items.LEATHER)
+                .define('L', Tags.Items.LEATHERS)
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .define('X', divingFabric)
                 .pattern("X X")
@@ -323,7 +323,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_DIVING_ARMOR)), this.modid + ":" + folder + "/" + name(result));
 
         ShapedRecipeBuilder.shaped(MISC, hazmatFabric)
-                .define('S', Tags.Items.STRING)
+                .define('S', Tags.Items.STRINGS)
                 .define('H', reg.get("cured_rubber"))
                 .pattern(" S ")
                 .pattern("SHS")
@@ -363,7 +363,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         result = reg.get(ID_HAZMAT_BOOTS);
         ShapedRecipeBuilder.shaped(COMBAT, result)
-                .define('L', Tags.Items.LEATHER)
+                .define('L', Tags.Items.LEATHERS)
                 .define('R', reg.get("cured_rubber"))
                 .define('X', hazmatFabric)
                 .pattern("X X")
@@ -589,7 +589,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         result = reg.get("upgrade_augment_1");
         ShapedRecipeBuilder.shaped(MISC, result)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTagsCoFH.INGOTS_INVAR)
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .define('X', ItemTagsCoFH.GEARS_GOLD)
@@ -692,12 +692,12 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
         result = reg.get(ID_SATCHEL);
         ShapedRecipeBuilder.shaped(TOOLS, result)
                 .define('I', ItemTagsCoFH.INGOTS_TIN)
-                .define('L', Tags.Items.LEATHER)
+                .define('L', Tags.Items.LEATHERS)
                 .define('W', ThermalTags.Items.ROCKWOOL)
                 .pattern("LWL")
                 .pattern("WIW")
                 .pattern("LWL")
-                .unlockedBy("has_leather", has(Tags.Items.LEATHER))
+                .unlockedBy("has_leather", has(Tags.Items.LEATHERS))
                 .save(recipeOutput, this.modid + ":" + folder + "/" + name(result));
 
         result = reg.get(ID_DETONATOR);
@@ -742,7 +742,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput, ID_THERMAL + ":florb_8");
 
         ShapelessRecipeBuilder.shapeless(MISC, reg.get("phytogro"), 8)
-                .requires(Tags.Items.SAND)
+                .requires(Tags.Items.SANDS)
                 .requires(fromTags(ItemTagsCoFH.GEMS_APATITE, ItemTagsCoFH.DUSTS_APATITE))
                 .requires(fromTags(ItemTagsCoFH.GEMS_APATITE, ItemTagsCoFH.DUSTS_APATITE))
                 .requires(fromTags(ItemTagsCoFH.GEMS_NITER, ItemTagsCoFH.DUSTS_NITER))
@@ -750,7 +750,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput, ID_THERMAL + ":phytogro_8");
 
         ShapelessRecipeBuilder.shapeless(MISC, reg.get("phytogro"), 4)
-                .requires(Tags.Items.SAND)
+                .requires(Tags.Items.SANDS)
                 .requires(Items.BONE_MEAL)
                 .requires(fromTags(ItemTagsCoFH.GEMS_APATITE, ItemTagsCoFH.DUSTS_APATITE))
                 .requires(fromTags(ItemTagsCoFH.GEMS_NITER, ItemTagsCoFH.DUSTS_NITER))
@@ -758,7 +758,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput, ID_THERMAL + ":phytogro_4");
 
         ShapelessRecipeBuilder.shapeless(MISC, reg.get("phytogro"), 2)
-                .requires(Tags.Items.SAND)
+                .requires(Tags.Items.SANDS)
                 .requires(Items.BONE_MEAL)
                 .requires(reg.get("rich_slag"))
                 .requires(fromTags(ItemTagsCoFH.GEMS_NITER, ItemTagsCoFH.DUSTS_NITER))
@@ -766,13 +766,13 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput, ID_THERMAL + ":phytogro_2");
 
         ShapedRecipeBuilder.shaped(MISC, reg.get("junk_net"), 1)
-                .define('#', Tags.Items.STRING)
+                .define('#', Tags.Items.STRINGS)
                 .define('n', Tags.Items.NUGGETS_IRON)
                 .define('S', Items.STICK)
                 .pattern("n#n")
                 .pattern("#S#")
                 .pattern("n#n")
-                .unlockedBy("has_string", has(Tags.Items.STRING))
+                .unlockedBy("has_string", has(Tags.Items.STRINGS))
                 .save(recipeOutput.withConditions(new FlagSetCondition(ID_DEVICE_FISHER)));
 
         ShapelessRecipeBuilder.shapeless(MISC, reg.get("aquachow"), 4)
@@ -835,7 +835,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapelessRecipeBuilder.shapeless(BUILDING_BLOCKS, Blocks.DIRT)
                 .requires(reg.get("compost"))
-                .requires(Tags.Items.SAND)
+                .requires(Tags.Items.SANDS)
                 .requires(ThermalTags.Items.SLAG)
                 .unlockedBy("has_compost", has(reg.get("compost")))
                 .save(recipeOutput, ID_THERMAL + ":dirt_crafting");
@@ -843,7 +843,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
         ShapelessRecipeBuilder.shapeless(BUILDING_BLOCKS, Blocks.PODZOL)
                 .requires(reg.get("compost"))
                 .requires(ItemTags.LEAVES)
-                .requires(Tags.Items.SAND)
+                .requires(Tags.Items.SANDS)
                 .requires(ThermalTags.Items.SLAG)
                 .unlockedBy("has_compost", has(reg.get("compost")))
                 .save(recipeOutput, ID_THERMAL + ":podzol_crafting");
@@ -851,7 +851,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
         ShapelessRecipeBuilder.shapeless(BUILDING_BLOCKS, Blocks.MYCELIUM)
                 .requires(reg.get("compost"))
                 .requires(Tags.Items.MUSHROOMS)
-                .requires(Tags.Items.SAND)
+                .requires(Tags.Items.SANDS)
                 .requires(ThermalTags.Items.SLAG)
                 .unlockedBy("has_compost", has(reg.get("compost")))
                 .save(recipeOutput, ID_THERMAL + ":mycelium_crafting");
@@ -866,21 +866,21 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
         Item lightningCharge = reg.get("lightning_charge");
 
         ShapelessRecipeBuilder.shapeless(TOOLS, earthCharge, 3)
-                .requires(Tags.Items.GUNPOWDER)
+                .requires(Tags.Items.GUNPOWDERS)
                 .requires(reg.get("basalz_powder"))
                 .requires(Ingredient.of(Items.COAL, Items.CHARCOAL))
                 .unlockedBy("has_basalz_powder", has(reg.get("basalz_powder")))
                 .save(consumer, ID_THERMAL + ":earth_charge_3");
 
         ShapelessRecipeBuilder.shapeless(TOOLS, iceCharge, 3)
-                .requires(Tags.Items.GUNPOWDER)
+                .requires(Tags.Items.GUNPOWDERS)
                 .requires(reg.get("blizz_powder"))
                 .requires(Ingredient.of(Items.COAL, Items.CHARCOAL))
                 .unlockedBy("has_blizz_powder", has(reg.get("blizz_powder")))
                 .save(consumer, ID_THERMAL + ":ice_charge_3");
 
         ShapelessRecipeBuilder.shapeless(TOOLS, lightningCharge, 3)
-                .requires(Tags.Items.GUNPOWDER)
+                .requires(Tags.Items.GUNPOWDERS)
                 .requires(reg.get("blitz_powder"))
                 .requires(Ingredient.of(Items.COAL, Items.CHARCOAL))
                 .unlockedBy("has_blitz_powder", has(reg.get("blitz_powder")))
@@ -1030,7 +1030,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_TOOL_COMPONENTS)));
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_MACHINE_FRAME))
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('T', ItemTagsCoFH.GEARS_TIN)
                 .pattern("IGI")
@@ -1040,7 +1040,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(ID_MACHINE_FRAME)));
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_ENERGY_CELL_FRAME))
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTagsCoFH.INGOTS_LEAD)
                 .define('E', ItemTagsCoFH.GEARS_ELECTRUM)
                 .pattern("IGI")
@@ -1050,7 +1050,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(ID_ENERGY_CELL_FRAME)));
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_FLUID_CELL_FRAME))
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', Tags.Items.INGOTS_COPPER)
                 .define('E', ItemTagsCoFH.GEARS_BRONZE)
                 .pattern("IGI")
@@ -1060,7 +1060,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(ID_FLUID_CELL_FRAME)));
 
         //        ShapedRecipeBuilder.shaped(reg.get(ID_ITEM_CELL_FRAME))
-        //                .define('G', Tags.Items.GLASS)
+        //                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
         //                .define('I', ItemTagsCoFH.INGOTS_TIN)
         //                .define('E', ItemTagsCoFH.GEARS_IRON)
         //                .pattern("IGI")
@@ -1075,17 +1075,17 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
         var reg = ITEMS;
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_EXPLOSIVE_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
-                .define('P', Tags.Items.SAND)
+                .define('P', Tags.Items.SANDS)
                 .pattern("GPG")
                 .pattern("PIP")
                 .pattern("GPG")
-                .unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDER))
+                .unlockedBy("has_gunpowder", has(Tags.Items.GUNPOWDERS))
                 .save(recipeOutput, ID_THERMAL + ":explosive_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_SLIME_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', Tags.Items.SLIMEBALLS)
                 .pattern("GPG")
@@ -1095,7 +1095,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)), ID_THERMAL + ":slime_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_REDSTONE_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', Tags.Items.DUSTS_REDSTONE)
                 .pattern("GPG")
@@ -1105,7 +1105,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)), ID_THERMAL + ":redstone_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_GLOWSTONE_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', Tags.Items.DUSTS_GLOWSTONE)
                 .pattern("GPG")
@@ -1115,7 +1115,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)), ID_THERMAL + ":glowstone_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_ENDER_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', Tags.Items.ENDER_PEARLS)
                 .pattern("GPG")
@@ -1125,7 +1125,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)), ID_THERMAL + ":ender_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_PHYTO_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', reg.get("phytogro"))
                 .pattern("GPG")
@@ -1135,7 +1135,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_PHYTOGRO_EXPLOSIVES)), ID_THERMAL + ":phyto_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_EARTH_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', reg.get("basalz_powder"))
                 .pattern("GPG")
@@ -1145,7 +1145,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_ELEMENTAL_EXPLOSIVES)), ID_THERMAL + ":earth_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_FIRE_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', Items.BLAZE_POWDER)
                 .pattern("GPG")
@@ -1155,7 +1155,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_ELEMENTAL_EXPLOSIVES)), ID_THERMAL + ":fire_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_ICE_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', reg.get("blizz_powder"))
                 .pattern("GPG")
@@ -1165,7 +1165,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_ELEMENTAL_EXPLOSIVES)), ID_THERMAL + ":ice_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_LIGHTNING_GRENADE), 4)
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', reg.get("blitz_powder"))
                 .pattern("GPG")
@@ -1175,7 +1175,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_ELEMENTAL_EXPLOSIVES)), ID_THERMAL + ":lightning_grenade_4");
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_SLIME_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', Tags.Items.SLIMEBALLS)
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1184,7 +1184,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_REDSTONE_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', Tags.Items.DUSTS_REDSTONE)
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1193,7 +1193,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_GLOWSTONE_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', Tags.Items.DUSTS_GLOWSTONE)
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1202,7 +1202,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_ENDER_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', Tags.Items.ENDER_PEARLS)
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1211,7 +1211,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_BASIC_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_PHYTO_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', reg.get("phytogro"))
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1220,7 +1220,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_PHYTOGRO_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_EARTH_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', reg.get("basalz_powder"))
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1229,7 +1229,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_ELEMENTAL_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_FIRE_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', Items.BLAZE_POWDER)
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1238,7 +1238,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_ELEMENTAL_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_ICE_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', reg.get("blizz_powder"))
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1247,7 +1247,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
                 .save(recipeOutput.withConditions(new FlagSetCondition(FLAG_ELEMENTAL_EXPLOSIVES)));
 
         ShapedRecipeBuilder.shaped(TOOLS, reg.get(ID_LIGHTNING_TNT))
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('P', reg.get("blitz_powder"))
                 .pattern("GPG")
                 .pattern("PGP")
@@ -1434,7 +1434,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_HIVE_EXTRACTOR))
                 .define('C', Items.SHEARS)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTags.PLANKS)
                 .define('P', redstoneServo)
                 .define('X', ItemTagsCoFH.GEARS_IRON)
@@ -1446,7 +1446,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_TREE_EXTRACTOR))
                 .define('C', Items.BUCKET)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTags.PLANKS)
                 .define('P', redstoneServo)
                 .define('X', ItemTagsCoFH.GEARS_IRON)
@@ -1458,7 +1458,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_FISHER))
                 .define('C', Items.FISHING_ROD)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTags.PLANKS)
                 .define('P', redstoneServo)
                 .define('X', ItemTagsCoFH.GEARS_COPPER)
@@ -1470,7 +1470,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_COMPOSTER))
                 .define('C', Blocks.COMPOSTER)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTags.PLANKS)
                 .define('P', redstoneServo)
                 .define('X', ItemTagsCoFH.GEARS_IRON)
@@ -1482,7 +1482,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_SOIL_INFUSER))
                 .define('C', reg.get("phytogro"))
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTags.PLANKS)
                 .define('P', rfCoil)
                 .define('X', ItemTagsCoFH.GEARS_LUMIUM)
@@ -1494,7 +1494,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_ROCK_GEN))
                 .define('C', Items.PISTON)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTagsCoFH.INGOTS_INVAR)
                 .define('P', redstoneServo)
                 .define('X', ItemTagsCoFH.GEARS_CONSTANTAN)
@@ -1506,7 +1506,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_WATER_GEN))
                 .define('C', Items.BUCKET)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', Tags.Items.INGOTS_COPPER)
                 .define('P', redstoneServo)
                 .define('X', Tags.Items.INGOTS_IRON)
@@ -1518,7 +1518,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_COLLECTOR))
                 .define('C', Items.HOPPER)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTagsCoFH.INGOTS_TIN)
                 .define('P', redstoneServo)
                 .define('X', Tags.Items.ENDER_PEARLS)
@@ -1530,7 +1530,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_XP_CONDENSER))
                 .define('C', reg.get("xp_crystal"))
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTagsCoFH.INGOTS_SILVER)
                 .define('P', redstoneServo)
                 .define('X', ItemTagsCoFH.GEARS_LAPIS)
@@ -1542,7 +1542,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_NULLIFIER))
                 .define('C', Items.LAVA_BUCKET)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTagsCoFH.INGOTS_TIN)
                 .define('P', redstoneServo)
                 .define('X', Tags.Items.DUSTS_REDSTONE)
@@ -1554,7 +1554,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_DEVICE_POTION_DIFFUSER))
                 .define('C', Items.GLASS_BOTTLE)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', ItemTagsCoFH.INGOTS_SILVER)
                 .define('P', redstoneServo)
                 .define('X', ItemTagsCoFH.GEARS_CONSTANTAN)
@@ -1602,7 +1602,7 @@ public class TCoreRecipeProvider extends RecipeProviderCoFH {
 
         ShapedRecipeBuilder.shaped(MISC, reg.get(ID_TINKER_BENCH))
                 .define('C', Blocks.CRAFTING_TABLE)
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('P', rfCoil)
                 .define('X', ItemTags.PLANKS)

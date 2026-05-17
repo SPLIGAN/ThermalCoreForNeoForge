@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 import static cofh.lib.util.constants.NBTTags.TAG_XP_TIMER;
 import static cofh.lib.util.helpers.StringHelper.getTextComponent;
 
@@ -27,7 +28,7 @@ public class XpCrystalItem extends XpContainerItem implements IMultiModeItem {
 
         super(builder, xpCapacity);
 
-        ProxyUtils.registerItemModelProperty(this, new ResourceLocation("stored"), (stack, world, living, seed) -> ((float) getStoredXp(stack)) / getCapacityXp(stack));
+        ProxyUtils.registerItemModelProperty(this, ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "stored"), (stack, world, living, seed) -> ((float) getStoredXp(stack)) / getCapacityXp(stack));
     }
 
     @Override

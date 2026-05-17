@@ -102,7 +102,7 @@ public class RockGenCategory implements IRecipeCategory<RecipeHolder<RockGenMapp
 
         if (adjacent instanceof LiquidBlock liquidBlock) {
             builder.addSlot(RecipeIngredientRole.INPUT, 45, 13)
-                    .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(new FluidStack(liquidBlock.getFluid(), BUCKET_VOLUME)))
+                    .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(new FluidStack(liquidBlock.fluid, BUCKET_VOLUME)))
                     .setFluidRenderer(BUCKET_VOLUME, false, 16, 16);
         } else if (adjacent != Blocks.AIR) {
             builder.addSlot(RecipeIngredientRole.INPUT, 45, 13)
@@ -110,7 +110,7 @@ public class RockGenCategory implements IRecipeCategory<RecipeHolder<RockGenMapp
         }
         if (below instanceof LiquidBlock liquidBlock) {
             builder.addSlot(RecipeIngredientRole.INPUT, 34, 34)
-                    .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(new FluidStack(liquidBlock.getFluid(), BUCKET_VOLUME)))
+                    .addIngredients(NeoForgeTypes.FLUID_STACK, List.of(new FluidStack(liquidBlock.fluid, BUCKET_VOLUME)))
                     .setFluidRenderer(BUCKET_VOLUME, false, 16, 16);
         } else if (below != Blocks.AIR) {
             builder.addSlot(RecipeIngredientRole.INPUT, 34, 34)

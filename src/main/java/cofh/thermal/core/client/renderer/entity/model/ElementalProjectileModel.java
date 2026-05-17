@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 
 public class ElementalProjectileModel<T extends Entity> extends HierarchicalModel<T> {
 
-    public static final ModelLayerLocation PROJECTILE_LAYER = new ModelLayerLocation(new ResourceLocation("thermal:elemental_projectile"), "main");
+    public static final ModelLayerLocation PROJECTILE_LAYER = new ModelLayerLocation(ResourceLocation.parse("thermal:elemental_projectile"), "main");
 
     protected final ModelPart root;
     protected final ModelPart cube;

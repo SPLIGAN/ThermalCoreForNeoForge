@@ -75,10 +75,10 @@ public class TreeExtractorManager extends AbstractManager {
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        for (var mapping : recipeManager.byType(TREE_EXTRACTOR_MAPPING.get()).values()) {
+        for (var mapping : recipeManager.getAllRecipesFor(TREE_EXTRACTOR_MAPPING.get())) {
             recipes.add(mapping.value());
         }
-        for (var boost : recipeManager.byType(TREE_EXTRACTOR_BOOST.get()).values()) {
+        for (var boost : recipeManager.getAllRecipesFor(TREE_EXTRACTOR_BOOST.get())) {
             addBoost(boost.value());
         }
     }

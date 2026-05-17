@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:filter_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "tag": "c:ingots/signalum"
+    },
+    "t": {
+      "tag": "c:nuggets/tin"
+    }
+  },
+  "pattern": [
+    " t ",
+    "tSt",
+    " t "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:item_filter_augment"
+  }
+}

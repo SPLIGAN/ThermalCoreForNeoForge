@@ -30,12 +30,12 @@ public class ThermalTags {
         // region HELPERS
         private static TagKey<Block> thermalTag(String name) {
 
-            return BlockTags.create(new ResourceLocation(ID_THERMAL, name));
+            return BlockTags.create(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, name));
         }
 
         private static TagKey<Block> commonTag(String name) {
 
-            return BlockTags.create(new ResourceLocation("c", name));
+            return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
         }
         // endregion
     }
@@ -63,12 +63,12 @@ public class ThermalTags {
         // region HELPERS
         private static TagKey<Item> thermalTag(String name) {
 
-            return ItemTags.create(new ResourceLocation(ID_THERMAL, name));
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, name));
         }
 
         private static TagKey<Item> commonTag(String name) {
 
-            return ItemTags.create(new ResourceLocation("c", name));
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
         }
         // endregion
     }

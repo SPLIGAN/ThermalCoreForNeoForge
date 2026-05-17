@@ -34,7 +34,7 @@ public class LatexFluid extends FluidCoFH {
 
         super(FLUIDS, ID_FLUID_LATEX);
 
-        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_LATEX), () -> new BucketItem(stillFluid, itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
+        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_LATEX), () -> new BucketItem(stillFluid.get(), itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
     }
 
     @Override
@@ -61,8 +61,8 @@ public class LatexFluid extends FluidCoFH {
             consumer.accept(new IClientFluidTypeExtensions() {
 
                 private static final ResourceLocation
-                        STILL = new ResourceLocation("thermal:block/fluids/latex_still"),
-                        FLOW = new ResourceLocation("thermal:block/fluids/latex_flow");
+                        STILL = ResourceLocation.parse("thermal:block/fluids/latex_still"),
+                        FLOW = ResourceLocation.parse("thermal:block/fluids/latex_flow");
 
                 @Override
                 public ResourceLocation getStillTexture() {

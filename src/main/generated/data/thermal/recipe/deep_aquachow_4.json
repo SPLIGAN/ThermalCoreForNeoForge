@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "device_fisher"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "tag": "c:nuggets/lead"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "thermal:deep_aquachow"
+  }
+}

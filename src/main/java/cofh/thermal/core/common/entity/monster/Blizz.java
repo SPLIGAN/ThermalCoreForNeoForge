@@ -25,10 +25,11 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.FrostWalkerEnchantment;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -57,7 +58,7 @@ public class Blizz extends Monster {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.navigation = new FlyingPathNavigation(this, world);
         //this.setPathfindingMalus(PathNodeType.WATER, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.LAVA, -1.0F);
+        this.setPathfindingMalus(PathType.LAVA, -1.0F);
 
         this.xpReward = 10;
     }
@@ -86,10 +87,10 @@ public class Blizz extends Monster {
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
-        super.defineSynchedData();
-        this.entityData.define(ANGRY, (byte) 0);
+        super.defineSynchedData(builder);
+        builder.define(ANGRY, (byte) 0);
     }
 
     @Override
@@ -128,14 +129,13 @@ public class Blizz extends Monster {
     }
 
     @Override
-    protected void onChangedBlock(BlockPos pos) {
+    protected void onChangedBlock(ServerLevel serverLevel, BlockPos pos) {
 
-        FrostWalkerEnchantment.onEntityMoved(this, level, pos, 1);
-
-        if (this.shouldRemoveSoulSpeed(this.getBlockStateOn())) {
-            this.removeSoulSpeed();
+        BlockPos below = pos.below();
+        if (serverLevel.getBlockState(below).is(Blocks.WATER)) {
+            serverLevel.setBlockAndUpdate(below, Blocks.FROSTED_ICE.defaultBlockState());
         }
-        this.tryAddSoulSpeed();
+
     }
 
     @Override

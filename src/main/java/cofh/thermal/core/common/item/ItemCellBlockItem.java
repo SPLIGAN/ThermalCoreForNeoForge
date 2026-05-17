@@ -25,10 +25,11 @@ public class ItemCellBlockItem extends BlockItemAugmentable {
 
     protected void setAttributesFromAugment(ItemStack container, CompoundTag augmentData) {
 
-        CompoundTag subTag = container.getTagElement(TAG_PROPERTIES);
-        if (subTag == null) {
+        CompoundTag root = cofh.lib.util.CoFHItemData.getTag(container);
+        if (!root.contains(TAG_PROPERTIES, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             return;
         }
+        CompoundTag subTag = root.getCompound(TAG_PROPERTIES);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_BASE_MOD);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_ITEM_STORAGE);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_ITEM_CREATIVE);

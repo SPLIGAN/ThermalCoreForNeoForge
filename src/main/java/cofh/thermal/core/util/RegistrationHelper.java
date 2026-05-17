@@ -100,7 +100,7 @@ public final class RegistrationHelper {
 
         blocksTab(150, registerBlock(woodName + "_planks", () -> new Block(of().mapColor(color).instrument(NoteBlockInstrument.BASS).strength(hardness, resistance).sound(soundType)), modId));
         blocksTab(150, registerBlock(woodName + "_slab", () -> new SlabBlock(of().mapColor(color).instrument(NoteBlockInstrument.BASS).strength(hardness, resistance).sound(soundType)), modId));
-        blocksTab(150, registerBlock(woodName + "_stairs", () -> new StairBlock(() -> BLOCKS.get(woodName + "_planks").defaultBlockState(), of().mapColor(color).instrument(NoteBlockInstrument.BASS).strength(hardness, resistance).sound(soundType)), modId));
+        blocksTab(150, registerBlock(woodName + "_stairs", () -> new StairBlock(BLOCKS.get(woodName + "_planks").defaultBlockState(), of().mapColor(color).instrument(NoteBlockInstrument.BASS).strength(hardness, resistance).sound(soundType)), modId));
         blocksTab(150, registerBlock(woodName + "_door", () -> new DoorBlock(type.setType(), of().mapColor(color).instrument(NoteBlockInstrument.BASS).strength(resistance).sound(soundType).noOcclusion()), modId));
         blocksTab(150, registerBlock(woodName + "_trapdoor", () -> new TrapDoorBlock(type.setType(), of().mapColor(color).instrument(NoteBlockInstrument.BASS).strength(resistance).sound(soundType).noOcclusion().isValidSpawn((state, reader, pos, entityType) -> false)), modId));
         blocksTab(150, registerBlock(woodName + "_button", () -> Blocks.woodenButton(type.setType()), modId));

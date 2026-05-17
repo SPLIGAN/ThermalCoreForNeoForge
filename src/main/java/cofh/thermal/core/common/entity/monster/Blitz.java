@@ -30,7 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -58,8 +58,8 @@ public class Blitz extends Monster {
 
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.navigation = new FlyingPathNavigation(this, world);
-        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.LAVA, -1.0F);
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        this.setPathfindingMalus(PathType.LAVA, -1.0F);
 
         this.xpReward = 10;
     }
@@ -88,10 +88,10 @@ public class Blitz extends Monster {
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
-        super.defineSynchedData();
-        this.entityData.define(ANGRY, (byte) 0);
+        super.defineSynchedData(builder);
+        builder.define(ANGRY, (byte) 0);
     }
 
     @Override

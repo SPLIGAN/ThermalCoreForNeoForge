@@ -14,6 +14,7 @@ import cofh.lib.common.inventory.ItemStorageCoFH;
 import cofh.thermal.core.common.inventory.TinkerBenchMenu;
 import cofh.thermal.lib.common.block.entity.AugmentableBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -150,7 +151,7 @@ public class TinkerBenchBlockEntity extends AugmentableBlockEntity implements IT
             } else {
                 var handler = tankSlot.getItemStack().getCapability(Capabilities.FluidHandler.ITEM);
                 if (handler != null) {
-                    int toFill = tank.fill(new FluidStack(handler.getFluidInTank(0), BUCKET_VOLUME), SIMULATE);
+                    int toFill = tank.fill(handler.getFluidInTank(0).copyWithAmount(BUCKET_VOLUME), SIMULATE);
                     if (toFill > 0) {
                         tank.fill(handler.drain(toFill, EXECUTE), EXECUTE);
                         tankSlot.setItemStack(handler.getContainer());
@@ -161,7 +162,7 @@ public class TinkerBenchBlockEntity extends AugmentableBlockEntity implements IT
         if (!tinkerSlot.isEmpty() && mode == REPLENISH && !pause) {
             var handler = tinkerSlot.getItemStack().getCapability(Capabilities.FluidHandler.ITEM);
             if (handler != null) {
-                tank.drain(handler.fill(new FluidStack(tank.getFluidStack(), Math.min(tank.getAmount(), BUCKET_VOLUME)), EXECUTE), EXECUTE);
+                tank.drain(handler.fill(tank.getFluidStack().copyWithAmount(Math.min(tank.getAmount(), BUCKET_VOLUME)), EXECUTE), EXECUTE);
                 tinkerSlot.setItemStack(handler.getContainer());
             }
         }
@@ -204,17 +205,17 @@ public class TinkerBenchBlockEntity extends AugmentableBlockEntity implements IT
 
     // region NBT
     @Override
-    public void load(CompoundTag nbt) {
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 
-        super.load(nbt);
+        super.loadAdditional(nbt, registries);
 
         mode = nbt.getByte(TAG_MODE);
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 
-        super.saveAdditional(nbt);
+        super.saveAdditional(nbt, registries);
 
         nbt.putByte(TAG_MODE, mode);
     }

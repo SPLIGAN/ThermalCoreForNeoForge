@@ -129,7 +129,7 @@ public class DetonateUtils {
         AABB area = AABB.encapsulatingFullBlocks(blockPos.offset(-radius, -radius, -radius), blockPos.offset(1 + radius, 1 + radius, 1 + radius));
 
         for (LivingEntity mob : level.getEntitiesOfClass(LivingEntity.class, area, EntitySelector.ENTITY_STILL_ALIVE)) {
-            mob.addEffect(new MobEffectInstance(SLIMED.get(), duration, amplifier, false, true));
+            mob.addEffect(new MobEffectInstance(SLIMED, duration, amplifier, false, true));
 
             double d5 = mob.getX() - explosive.getX();
             double d7 = mob.getY() - explosive.getY();

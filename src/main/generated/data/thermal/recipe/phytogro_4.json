@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:sands"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    [
+      {
+        "tag": "c:gems/apatite"
+      },
+      {
+        "tag": "c:dusts/apatite"
+      }
+    ],
+    [
+      {
+        "tag": "c:gems/niter"
+      },
+      {
+        "tag": "c:dusts/niter"
+      }
+    ]
+  ],
+  "result": {
+    "count": 4,
+    "id": "thermal:phytogro"
+  }
+}

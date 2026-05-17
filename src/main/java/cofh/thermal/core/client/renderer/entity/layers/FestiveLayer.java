@@ -50,7 +50,7 @@ public class FestiveLayer<T extends LivingEntity, M extends HierarchicalModel<T>
         pPoseStack.mulPose(Axis.XP.rotationDegrees(pHeadPitch));
 
         VertexConsumer builder = pBuffer.getBuffer(santaHatModel.renderType(SantaHatModel.TEXTURE));
-        this.santaHatModel.renderToBuffer(pPoseStack, builder, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.santaHatModel.renderToBuffer(pPoseStack, builder, pPackedLight, OverlayTexture.NO_OVERLAY, -1);
         pPoseStack.popPose();
     }
 

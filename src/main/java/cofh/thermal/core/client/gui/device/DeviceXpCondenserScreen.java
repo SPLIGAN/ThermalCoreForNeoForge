@@ -12,7 +12,7 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 public class DeviceXpCondenserScreen extends AugmentableTileScreen<DeviceXpCondenserMenu> {
 
     public static final String TEX_PATH = ID_THERMAL + ":textures/gui/container/xp_condenser.png";
-    public static final ResourceLocation TEXTURE = new ResourceLocation(TEX_PATH);
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(TEX_PATH);
 
     public DeviceXpCondenserScreen(DeviceXpCondenserMenu container, Inventory inv, Component titleIn) {
 

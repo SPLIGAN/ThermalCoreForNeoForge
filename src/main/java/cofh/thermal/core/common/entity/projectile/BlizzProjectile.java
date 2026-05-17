@@ -68,7 +68,7 @@ public class BlizzProjectile extends ElementalProjectile {
             entity.clearFire();
         }
         if (entity.hurt(this.damageSource(), getDamage(entity)) && entity instanceof LivingEntity living) {
-            living.addEffect(new MobEffectInstance(CHILLED.get(), getEffectDuration(entity), getEffectAmplifier(entity), false, false));
+            living.addEffect(new MobEffectInstance(CHILLED, getEffectDuration(entity), getEffectAmplifier(entity), false, false));
         }
     }
 
@@ -79,7 +79,7 @@ public class BlizzProjectile extends ElementalProjectile {
             if (living.isOnFire()) {
                 living.clearFire();
             }
-            living.addEffect(new MobEffectInstance(CHILLED.get(), getEffectDuration(living), Math.min(getEffectAmplifier(living) - 1, 0), false, false));
+            living.addEffect(new MobEffectInstance(CHILLED, getEffectDuration(living), Math.min(getEffectAmplifier(living) - 1, 0), false, false));
         }
         super.onHitBlock(result);
     }

@@ -2,8 +2,7 @@ package cofh.thermal.core.init.registries;
 
 import cofh.thermal.core.common.world.ConfigPlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
-
-import java.util.function.Supplier;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import static cofh.thermal.core.ThermalCore.PLACEMENT_MODIFIERS;
 
@@ -17,6 +16,7 @@ public class TCorePlacementModifiers {
 
     }
 
-    public static final Supplier<PlacementModifierType<ConfigPlacementFilter>> CONFIG_FILTER = PLACEMENT_MODIFIERS.register("config", () -> () -> ConfigPlacementFilter.CODEC);
+    public static final DeferredHolder<PlacementModifierType<?>, PlacementModifierType<ConfigPlacementFilter>> CONFIG_FILTER =
+            PLACEMENT_MODIFIERS.register("config", () -> () -> ConfigPlacementFilter.CODEC);
 
 }

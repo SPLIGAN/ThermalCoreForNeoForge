@@ -12,9 +12,14 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.neoforged.neoforge.event.EventHooks;
 
 public abstract class ElementalProjectile extends AbstractHurtingProjectile {
+
+    private double xPower;
+    private double yPower;
+    private double zPower;
 
     public ElementalProjectile(EntityType<? extends AbstractHurtingProjectile> type, Level world) {
 
@@ -23,12 +28,20 @@ public abstract class ElementalProjectile extends AbstractHurtingProjectile {
 
     public ElementalProjectile(EntityType<? extends AbstractHurtingProjectile> type, LivingEntity shooter, double accelX, double accelY, double accelZ, Level world) {
 
-        super(type, shooter, accelX, accelY, accelZ, world);
+        super(type, shooter, new Vec3(accelX, accelY, accelZ), world);
+        this.xPower = accelX;
+        this.yPower = accelY;
+        this.zPower = accelZ;
     }
 
     public ElementalProjectile(EntityType<? extends AbstractHurtingProjectile> type, double x, double y, double z, double accelX, double accelY, double accelZ, Level world) {
 
-        super(type, x, y, z, accelX, accelY, accelZ, world);
+        super(type, world);
+        setPos(x, y, z);
+        setDeltaMovement(accelX, accelY, accelZ);
+        this.xPower = accelX;
+        this.yPower = accelY;
+        this.zPower = accelZ;
     }
 
     @Override
@@ -44,7 +57,7 @@ public abstract class ElementalProjectile extends AbstractHurtingProjectile {
             }
             baseTick();
             if (shouldBurn()) {
-                setSecondsOnFire(1);
+                  igniteForSeconds(1.0F);
             }
             HitResult entityResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
             if (entityResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, entityResult)) {
@@ -82,7 +95,7 @@ public abstract class ElementalProjectile extends AbstractHurtingProjectile {
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
     }
 

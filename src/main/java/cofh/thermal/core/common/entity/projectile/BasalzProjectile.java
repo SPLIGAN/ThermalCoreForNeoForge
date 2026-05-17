@@ -55,7 +55,7 @@ public class BasalzProjectile extends ElementalProjectile {
 
         Entity entity = result.getEntity();
         if (entity.hurt(this.damageSource(), getDamage(entity)) && entity instanceof LivingEntity living) {
-            living.addEffect(new MobEffectInstance(SUNDERED.get(), getEffectDuration(entity), getEffectAmplifier(entity), false, false));
+            living.addEffect(new MobEffectInstance(SUNDERED, getEffectDuration(entity), getEffectAmplifier(entity), false, false));
             Vec3 velocity = this.getDeltaMovement();
             if (velocity.lengthSqr() > 0.01) {
                 living.knockback(knockbackStrength, -velocity.x, -velocity.z);

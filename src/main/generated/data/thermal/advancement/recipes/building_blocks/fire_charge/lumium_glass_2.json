@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lumium_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/lumium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_lumium_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/lumium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:fire_charge/lumium_glass_2"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_lumium_dust",
+      "has_lumium_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:fire_charge/lumium_glass_2"
+    ]
+  }
+}

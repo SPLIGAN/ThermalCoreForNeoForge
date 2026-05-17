@@ -6,6 +6,7 @@ import cofh.core.common.item.ArmorItemCoFH;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -33,7 +33,7 @@ public class HazmatArmorItem extends ArmorItemCoFH {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
 
         tooltip.add(getTextComponent("info.thermal.hazmat_armor").withStyle(ChatFormatting.GOLD));
 
@@ -46,16 +46,13 @@ public class HazmatArmorItem extends ArmorItemCoFH {
     }
 
     @Override
-    public void onArmorTick(ItemStack stack, Level world, Player player) {
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
 
-        if (getType().getSlot() == EquipmentSlot.HEAD) {
-            if (player.getAirSupply() < player.getMaxAirSupply() && world.random.nextInt(3) > 0) {
-                player.setAirSupply(player.getAirSupply() + 1);
-            }
-            // TODO: Revisit
-            //            if (!player.areEyesInFluid(FluidTags.WATER)) {
-            //                Utils.addPotionEffectNoEvent(player, new EffectInstance(Effects.WATER_BREATHING, AIR_DURATION, 0, false, false, true));
-            //            }
+        if (!(entity instanceof Player player) || level.isClientSide || stack != player.getItemBySlot(getType().getSlot())) {
+            return;
+        }
+        if (getType().getSlot() == EquipmentSlot.HEAD && player.getAirSupply() < player.getMaxAirSupply() && level.random.nextInt(3) > 0) {
+            player.setAirSupply(player.getAirSupply() + 1);
         }
     }
 

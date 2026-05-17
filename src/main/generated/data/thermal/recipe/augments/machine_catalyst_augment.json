@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:machine_augments"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:gears/constantan"
+    },
+    "L": {
+      "tag": "c:plates/lead"
+    },
+    "X": {
+      "item": "thermal:redstone_servo"
+    }
+  },
+  "pattern": [
+    " C ",
+    "LXL",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:machine_catalyst_augment"
+  }
+}

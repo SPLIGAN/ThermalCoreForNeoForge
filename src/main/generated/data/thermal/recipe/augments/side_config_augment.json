@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "i": {
+      "tag": "c:nuggets/tin"
+    }
+  },
+  "pattern": [
+    " i ",
+    "iGi",
+    " i "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:side_config_augment"
+  }
+}

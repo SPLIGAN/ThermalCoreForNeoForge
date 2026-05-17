@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "charge_bench"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "I": {
+      "tag": "c:ingots/electrum"
+    },
+    "P": {
+      "item": "thermal:rf_coil"
+    },
+    "X": {
+      "tag": "c:ingots/lead"
+    }
+  },
+  "pattern": [
+    "III",
+    "PCP",
+    "XPX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:charge_bench"
+  }
+}

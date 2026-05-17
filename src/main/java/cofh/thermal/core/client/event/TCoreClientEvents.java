@@ -23,7 +23,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import org.joml.Matrix4f;
@@ -37,7 +36,6 @@ import static cofh.lib.util.constants.NBTTags.TAG_TYPE;
 import static cofh.lib.util.helpers.StringHelper.*;
 import static cofh.thermal.lib.util.ThermalAugmentRules.*;
 
-@Mod.EventBusSubscriber (value = Dist.CLIENT, modid = ID_THERMAL)
 public class TCoreClientEvents {
 
     private TCoreClientEvents() {
@@ -121,12 +119,8 @@ public class TCoreClientEvents {
 
     private static void line(VertexConsumer builder, Matrix4f positionMatrix, BlockPos pos, float dx1, float dy1, float dz1, float dx2, float dy2, float dz2, int r, int g, int b, int a) {
 
-        builder.vertex(positionMatrix, pos.getX() + dx1, pos.getY() + dy1, pos.getZ() + dz1)
-                .color(r, g, b, a)
-                .endVertex();
-        builder.vertex(positionMatrix, pos.getX() + dx2, pos.getY() + dy2, pos.getZ() + dz2)
-                .color(r, g, b, a)
-                .endVertex();
+        builder.addVertex(positionMatrix, pos.getX() + dx1, pos.getY() + dy1, pos.getZ() + dz1).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, pos.getX() + dx2, pos.getY() + dy2, pos.getZ() + dz2).setColor(r, g, b, a);
     }
 
     private static void solidBox(VertexConsumer builder, Matrix4f positionMatrix, AABB area, int color) {
@@ -144,35 +138,35 @@ public class TCoreClientEvents {
         float maxY = (float) (area.maxY + offset);
         float maxZ = (float) (area.maxZ + offset);
 
-        builder.vertex(positionMatrix, minX, maxY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, maxY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, minY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, minX, minY, minZ).color(r, g, b, a).endVertex();
+        builder.addVertex(positionMatrix, minX, maxY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, maxY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, minY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, minX, minY, minZ).setColor(r, g, b, a);
 
-        builder.vertex(positionMatrix, minX, minY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, minY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, maxY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, minX, maxY, maxZ).color(r, g, b, a).endVertex();
+        builder.addVertex(positionMatrix, minX, minY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, minY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, maxY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, minX, maxY, maxZ).setColor(r, g, b, a);
 
-        builder.vertex(positionMatrix, minX, minY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, minY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, minY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, minX, minY, maxZ).color(r, g, b, a).endVertex();
+        builder.addVertex(positionMatrix, minX, minY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, minY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, minY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, minX, minY, maxZ).setColor(r, g, b, a);
 
-        builder.vertex(positionMatrix, minX, maxY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, maxY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, maxY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, minX, maxY, minZ).color(r, g, b, a).endVertex();
+        builder.addVertex(positionMatrix, minX, maxY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, maxY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, maxY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, minX, maxY, minZ).setColor(r, g, b, a);
 
-        builder.vertex(positionMatrix, minX, minY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, minX, maxY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, minX, maxY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, minX, minY, minZ).color(r, g, b, a).endVertex();
+        builder.addVertex(positionMatrix, minX, minY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, minX, maxY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, minX, maxY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, minX, minY, minZ).setColor(r, g, b, a);
 
-        builder.vertex(positionMatrix, maxX, minY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, maxY, minZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, maxY, maxZ).color(r, g, b, a).endVertex();
-        builder.vertex(positionMatrix, maxX, minY, maxZ).color(r, g, b, a).endVertex();
+        builder.addVertex(positionMatrix, maxX, minY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, maxY, minZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, maxY, maxZ).setColor(r, g, b, a);
+        builder.addVertex(positionMatrix, maxX, minY, maxZ).setColor(r, g, b, a);
     }
 
     private static void wireBox(VertexConsumer builder, Matrix4f positionMatrix, BlockPos pos, AABB area, int color) {

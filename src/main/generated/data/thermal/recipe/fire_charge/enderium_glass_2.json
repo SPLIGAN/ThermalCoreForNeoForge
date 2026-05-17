@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "thermal:obsidian_glass"
+    },
+    {
+      "item": "thermal:obsidian_glass"
+    },
+    [
+      {
+        "tag": "c:dusts/enderium"
+      },
+      {
+        "tag": "c:ingots/enderium"
+      }
+    ],
+    {
+      "item": "minecraft:fire_charge"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "thermal:enderium_glass"
+  }
+}

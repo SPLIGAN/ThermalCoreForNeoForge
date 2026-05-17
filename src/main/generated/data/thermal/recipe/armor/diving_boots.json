@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:diving_armor"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "tag": "c:ingots/gold"
+    },
+    "L": {
+      "tag": "c:leathers"
+    },
+    "X": {
+      "item": "thermal:diving_fabric"
+    }
+  },
+  "pattern": [
+    "X X",
+    "LIL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:diving_boots"
+  }
+}

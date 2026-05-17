@@ -3,6 +3,7 @@ package cofh.thermal.lib.common.item;
 import cofh.core.common.item.FluidContainerItem;
 import cofh.core.common.item.IAugmentableItem;
 import cofh.core.util.helpers.AugmentDataHelper;
+import cofh.lib.util.CoFHItemData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -61,10 +62,11 @@ public class FluidContainerItemAugmentable extends FluidContainerItem implements
 
     protected void setAttributesFromAugment(ItemStack container, CompoundTag augmentData) {
 
-        CompoundTag subTag = container.getTagElement(TAG_PROPERTIES);
-        if (subTag == null) {
+        CompoundTag root = CoFHItemData.getTag(container);
+        if (!root.contains(TAG_PROPERTIES, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             return;
         }
+        CompoundTag subTag = root.getCompound(TAG_PROPERTIES);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_BASE_MOD);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_FLUID_STORAGE);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_FLUID_CREATIVE);
@@ -120,7 +122,7 @@ public class FluidContainerItemAugmentable extends FluidContainerItem implements
     @Override
     public void updateAugmentState(ItemStack container, List<ItemStack> augments) {
 
-        container.getOrCreateTag().put(TAG_PROPERTIES, new CompoundTag());
+        CoFHItemData.updateTag(container, tag -> tag.put(TAG_PROPERTIES, new CompoundTag()));
         for (ItemStack augment : augments) {
             CompoundTag augmentData = AugmentDataHelper.getAugmentData(augment);
             if (augmentData == null) {
@@ -131,7 +133,7 @@ public class FluidContainerItemAugmentable extends FluidContainerItem implements
         FluidStack fluid = getFluid(container);
         if (isCreative(container, FLUID)) {
             if (!fluid.isEmpty()) {
-                fill(container, new FluidStack(fluid, getSpace(container)), EXECUTE);
+                fill(container, fluid.copyWithAmount(getSpace(container)), EXECUTE);
             }
         } else {
             int fluidExcess = getFluidAmount(container) - getCapacity(container);

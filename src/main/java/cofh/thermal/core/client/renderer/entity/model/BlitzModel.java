@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class BlitzModel<T extends LivingEntity> extends HierarchicalModel<T> {
 
-    public static final ModelLayerLocation BLITZ_LAYER = new ModelLayerLocation(new ResourceLocation("thermal:blitz"), "main");
+    public static final ModelLayerLocation BLITZ_LAYER = new ModelLayerLocation(ResourceLocation.parse("thermal:blitz"), "main");
 
     private final ModelPart root;
     private final ModelPart head;

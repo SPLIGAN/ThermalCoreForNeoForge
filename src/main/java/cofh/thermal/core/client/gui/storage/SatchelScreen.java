@@ -26,9 +26,9 @@ import static cofh.lib.util.Constants.PATH_GUI;
 
 public class SatchelScreen extends ContainerScreenCoFH<SatchelMenu> {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PATH_GUI + "generic.png");
-    public static final ResourceLocation TEXTURE_EXT = new ResourceLocation(PATH_GUI + "generic_extension.png");
-    public static final ResourceLocation SLOT_OVERLAY = new ResourceLocation(PATH_ELEMENTS + "locked_overlay_slot.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(PATH_GUI + "generic.png");
+    public static final ResourceLocation TEXTURE_EXT = ResourceLocation.parse(PATH_GUI + "generic_extension.png");
+    public static final ResourceLocation SLOT_OVERLAY = ResourceLocation.parse(PATH_ELEMENTS + "locked_overlay_slot.png");
 
     protected int renderExtension;
 

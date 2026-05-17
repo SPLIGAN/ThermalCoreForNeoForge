@@ -4,7 +4,8 @@ import cofh.lib.util.crafting.ComparableItemStack;
 import cofh.thermal.core.util.recipes.device.FisherBoost;
 import cofh.thermal.lib.util.managers.AbstractManager;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -18,7 +19,7 @@ public class FisherManager extends AbstractManager {
 
     private static final FisherManager INSTANCE = new FisherManager();
 
-    protected Map<ComparableItemStack, Triple<ResourceLocation, Float, Float>> boostMap = new Object2ObjectOpenHashMap<>();
+    protected Map<ComparableItemStack, Triple<ResourceKey<LootTable>, Float, Float>> boostMap = new Object2ObjectOpenHashMap<>();
 
     public static FisherManager instance() {
 
@@ -43,7 +44,7 @@ public class FisherManager extends AbstractManager {
         }
     }
 
-    public ResourceLocation getBoostLootTable(ItemStack item) {
+    public ResourceKey<LootTable> getBoostLootTable(ItemStack item) {
 
         return validBoost(item) ? boostMap.get(makeNBTComparable(item)).getLeft() : BuiltInLootTables.FISHING_FISH;
     }
@@ -64,9 +65,8 @@ public class FisherManager extends AbstractManager {
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        var boosts = recipeManager.byType(FISHER_BOOST.get());
-        for (var entry : boosts.entrySet()) {
-            addBoost(entry.getValue().value());
+        for (var holder : recipeManager.getAllRecipesFor(FISHER_BOOST.get())) {
+            addBoost(holder.value());
         }
     }
     // endregion

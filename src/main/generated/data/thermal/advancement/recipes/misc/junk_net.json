@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "device_fisher"
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_string": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:strings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:junk_net"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_string"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:junk_net"
+    ]
+  }
+}

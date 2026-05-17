@@ -1,0 +1,56 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    [
+      {
+        "tag": "c:dusts/lead"
+      },
+      {
+        "tag": "c:ingots/lead"
+      }
+    ],
+    [
+      {
+        "tag": "c:dusts/lead"
+      },
+      {
+        "tag": "c:ingots/lead"
+      }
+    ],
+    [
+      {
+        "tag": "c:dusts/lead"
+      },
+      {
+        "tag": "c:ingots/lead"
+      }
+    ],
+    {
+      "tag": "c:dusts/diamond"
+    },
+    [
+      {
+        "tag": "c:ender_pearls"
+      },
+      {
+        "tag": "c:dusts/ender_pearl"
+      }
+    ],
+    [
+      {
+        "tag": "c:ender_pearls"
+      },
+      {
+        "tag": "c:dusts/ender_pearl"
+      }
+    ],
+    {
+      "item": "minecraft:fire_charge"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "thermal:enderium_ingot"
+  }
+}

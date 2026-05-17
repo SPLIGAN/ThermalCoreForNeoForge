@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "energy_cell"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "thermal:energy_cell_frame"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "thermal:rf_coil"
+    },
+    "R": {
+      "item": "thermal:cured_rubber"
+    },
+    "X": {
+      "tag": "c:storage_blocks/redstone"
+    }
+  },
+  "pattern": [
+    "RXR",
+    "ICI",
+    "RPR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:energy_cell"
+  }
+}

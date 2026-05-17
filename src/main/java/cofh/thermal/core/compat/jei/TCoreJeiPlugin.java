@@ -86,7 +86,7 @@ public class TCoreJeiPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
 
-        return new ResourceLocation(ID_THERMAL, "core");
+        return ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "core");
     }
 
     // region HELPERS

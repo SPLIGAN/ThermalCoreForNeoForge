@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "device_potion_diffuser"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:glass_bottle"
+    },
+    "G": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "I": {
+      "tag": "c:ingots/silver"
+    },
+    "P": {
+      "item": "thermal:redstone_servo"
+    },
+    "X": {
+      "tag": "c:gears/constantan"
+    }
+  },
+  "pattern": [
+    "IXI",
+    "GCG",
+    "IPI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:device_potion_diffuser"
+  }
+}

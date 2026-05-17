@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.neoforged.neoforge.common.IPlantable;
+import net.minecraft.core.Direction;
 
 public class ChargedSoilBlock extends SoilBlock {
 
@@ -34,7 +34,7 @@ public class ChargedSoilBlock extends SoilBlock {
         BlockPos abovePos = pos.above();
         BlockState aboveState = worldIn.getBlockState(abovePos);
 
-        if (aboveState.getBlock() instanceof IPlantable && aboveState.isRandomlyTicking()) {
+        if (state.canSustainPlant(worldIn, pos, Direction.UP, aboveState).isTrue() && aboveState.isRandomlyTicking()) {
             int charge = state.getValue(CHARGED);
             int boost = 1 + charge;
             for (int i = 0; i < boost; ++i) {
@@ -52,7 +52,7 @@ public class ChargedSoilBlock extends SoilBlock {
         if (charge < 4) {
             worldIn.setBlock(pos, state.setValue(CHARGED, charge + 1), 2);
         } else if (worldIn instanceof ServerLevel) {
-            state.getBlock().tick(state, (ServerLevel) worldIn, pos, worldIn.random);
+            state.randomTick((ServerLevel) worldIn, pos, worldIn.random);
         }
     }
 

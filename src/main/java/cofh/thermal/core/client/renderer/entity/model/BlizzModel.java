@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class BlizzModel<T extends LivingEntity> extends HierarchicalModel<T> {
 
-    public static final ModelLayerLocation BLIZZ_LAYER = new ModelLayerLocation(new ResourceLocation("thermal:blizz"), "main");
+    public static final ModelLayerLocation BLIZZ_LAYER = new ModelLayerLocation(ResourceLocation.parse("thermal:blizz"), "main");
     private static final int CUBES = 4;
 
     private final ModelPart root;

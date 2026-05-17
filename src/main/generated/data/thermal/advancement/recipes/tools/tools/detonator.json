@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_signalum_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/signalum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thermal:tools/detonator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_signalum_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thermal:tools/detonator"
+    ]
+  }
+}

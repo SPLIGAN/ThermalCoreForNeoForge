@@ -8,7 +8,10 @@ import cofh.lib.util.helpers.StringHelper;
 import cofh.thermal.core.common.block.entity.storage.FluidCellBlockEntity;
 import cofh.thermal.lib.common.item.BlockItemAugmentable;
 import net.minecraft.ChatFormatting;
+import cofh.lib.util.CoFHItemData;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -59,10 +62,11 @@ public class FluidCellBlockItem extends BlockItemAugmentable implements IFluidCo
 
     protected void setAttributesFromAugment(ItemStack container, CompoundTag augmentData) {
 
-        CompoundTag subTag = container.getTagElement(TAG_PROPERTIES);
-        if (subTag == null) {
+        CompoundTag root = CoFHItemData.getTag(container);
+        if (!root.contains(TAG_PROPERTIES, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             return;
         }
+        CompoundTag subTag = root.getCompound(TAG_PROPERTIES);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_BASE_MOD);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_FLUID_STORAGE);
         setAttributeFromAugmentMax(subTag, augmentData, TAG_AUGMENT_FLUID_CREATIVE);
@@ -78,7 +82,8 @@ public class FluidCellBlockItem extends BlockItemAugmentable implements IFluidCo
     @Override
     public CompoundTag getOrCreateTankTag(ItemStack container) {
 
-        CompoundTag blockTag = container.getOrCreateTagElement(TAG_BLOCK_ENTITY);
+        CustomData data = container.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        CompoundTag blockTag = data.copyTag();
         ListTag tanks = blockTag.getList(TAG_TANK_INV, TAG_COMPOUND);
         if (tanks.isEmpty()) {
             CompoundTag tag = new CompoundTag();
@@ -86,15 +91,16 @@ public class FluidCellBlockItem extends BlockItemAugmentable implements IFluidCo
             new FluidStorageCoFH(FluidCellBlockEntity.BASE_CAPACITY).write(tag);
             tanks.add(tag);
             blockTag.put(TAG_TANK_INV, tanks);
+            container.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(blockTag));
         }
-        return tanks.getCompound(0);
+        return container.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY).copyTag().getList(TAG_TANK_INV, TAG_COMPOUND).getCompound(0);
     }
 
     @Override
     public FluidStack getFluid(ItemStack container) {
 
         CompoundTag tag = getOrCreateTankTag(container);
-        return FluidStack.loadFluidStackFromNBT(tag);
+        return new FluidStorageCoFH(FluidCellBlockEntity.BASE_CAPACITY).read(tag).getFluidStack();
     }
 
     @Override
@@ -119,7 +125,7 @@ public class FluidCellBlockItem extends BlockItemAugmentable implements IFluidCo
         FluidStorageCoFH tank = new FluidStorageCoFH(FluidCellBlockEntity.BASE_CAPACITY).setCapacity(getCapacity(container)).read(containerTag);
         if (isCreative(container, FLUID)) {
             if (action.execute()) {
-                tank.setFluidStack(new FluidStack(resource, tank.getCapacity()));
+                tank.setFluidStack(resource.copyWithAmount(tank.getCapacity()));
                 tank.write(containerTag);
             }
             return resource.getAmount();
@@ -135,7 +141,7 @@ public class FluidCellBlockItem extends BlockItemAugmentable implements IFluidCo
         CompoundTag containerTag = getOrCreateTankTag(container);
         FluidStorageCoFH tank = new FluidStorageCoFH(FluidCellBlockEntity.BASE_CAPACITY).setCapacity(getCapacity(container)).read(containerTag);
         if (isCreative(container, FLUID)) {
-            return new FluidStack(tank.getFluidStack(), maxDrain);
+            return tank.getFluidStack().copyWithAmount(maxDrain);
         }
         FluidStack ret = tank.drain(maxDrain, action);
         tank.write(containerTag);
@@ -147,7 +153,7 @@ public class FluidCellBlockItem extends BlockItemAugmentable implements IFluidCo
     @Override
     public void updateAugmentState(ItemStack container, List<ItemStack> augments) {
 
-        container.getOrCreateTag().put(TAG_PROPERTIES, new CompoundTag());
+        CoFHItemData.updateTag(container, tag -> tag.put(TAG_PROPERTIES, new CompoundTag()));
         for (ItemStack augment : augments) {
             CompoundTag augmentData = AugmentDataHelper.getAugmentData(augment);
             if (augmentData == null) {

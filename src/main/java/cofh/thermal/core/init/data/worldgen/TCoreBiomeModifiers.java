@@ -3,7 +3,7 @@ package cofh.thermal.core.init.data.worldgen;
 import cofh.thermal.core.init.registries.TCoreEntities;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -32,7 +32,7 @@ public class TCoreBiomeModifiers {
 
     public static final ResourceKey<BiomeModifier> BLIZZ_SPAWN_SNOWY = createKey("blizz_spawn_snowy");
 
-    public static void init(BootstapContext<BiomeModifier> context) {
+    public static void init(BootstrapContext<BiomeModifier> context) {
 
         var isBadlandsTag = context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_BADLANDS);
         var isSandyTag = context.lookup(Registries.BIOME).getOrThrow(Tags.Biomes.IS_SANDY);
@@ -60,10 +60,10 @@ public class TCoreBiomeModifiers {
     // region HELPERS
     private static ResourceKey<BiomeModifier> createKey(String name) {
 
-        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(ID_THERMAL, name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ResourceLocation.fromNamespaceAndPath(ID_THERMAL, name));
     }
 
-    private static void registerMob(BootstapContext<BiomeModifier> context, ResourceKey<BiomeModifier> biomeMod, HolderSet<Biome> biomes, List<MobSpawnSettings.SpawnerData> spawners) {
+    private static void registerMob(BootstrapContext<BiomeModifier> context, ResourceKey<BiomeModifier> biomeMod, HolderSet<Biome> biomes, List<MobSpawnSettings.SpawnerData> spawners) {
 
         context.register(biomeMod, new BiomeModifiers.AddSpawnsBiomeModifier(biomes, spawners));
     }

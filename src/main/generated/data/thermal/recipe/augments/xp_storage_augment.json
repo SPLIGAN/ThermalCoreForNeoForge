@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "thermal:xp_crystal"
+    },
+    "i": {
+      "tag": "c:nuggets/gold"
+    }
+  },
+  "pattern": [
+    " i ",
+    "iCi",
+    " i "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:xp_storage_augment"
+  }
+}

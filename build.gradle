@@ -5,15 +5,14 @@ plugins {
     id 'com.matthewprenger.cursegradle' version '1.4.0'
     id 'com.modrinth.minotaur' version "2.+"
 
-    id 'net.neoforged.gradle.userdev' version '7.0.97'
+    id 'net.neoforged.gradle.userdev' version '7.1.25'
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
     withSourcesJar()
-    // withJavadocJar()
 }
 
 sourceSets.main.resources.srcDirs += "src/main/generated"
@@ -25,94 +24,93 @@ base {
 
 def buildVersion = "${mod_version}." + (System.getenv("BUILD_NUMBER") ?: '0')
 version = "${mc_version}-${buildVersion}"
-println "Starting build of ${archivesBaseName}, Version: ${mod_version}"
+println "Starting build of ${base.archivesName.get()}, Version: ${mod_version}"
 println "Using NeoForge: ${neo_version}, for Minecraft: ${mc_version}"
 
 minecraft {
     accessTransformers.file file("src/main/resources/META-INF/accesstransformer.cfg")
 }
 
-def signProps = [:]
-if (System.getenv('KEY_STORE')) {
-    println 'Using Env variables for jar signing.'
-    signProps['keyStore'] = System.getenv('KEY_STORE')
-    file(System.getenv('KEY_STORE_PROPS')).withReader {
-        def props = new Properties()
-        props.load(it)
-        signProps.putAll(props)
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'info'
+        workingDirectory project.layout.projectDirectory.dir('run').dir(name)
+        modSource project.sourceSets.main
     }
-} else if (project.hasProperty('keyStore')) {
-    println 'Using Project properties for jar signing.'
-    signProps['keyStore'] = project.getProperty('keyStore')
-    signProps['storePass'] = project.getProperty('keyStorePass')
-    signProps['alias'] = project.getProperty('keyStoreAlias')
-    signProps['keyPass'] = project.getProperty('keyStoreKeyPass')
-} else {
-    println 'No signing secrets found, build will not be signed.'
+
+    client {
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+    }
+
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        argument '--nogui'
+    }
+
+    gameTestServer {
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+    }
+
+    data {
+        arguments.addAll '--mod', mod_id, '--all',
+                '--output', file('src/main/generated/').absolutePath,
+                '--existing', file('src/main/resources/').absolutePath
+    }
 }
 
-//if (System.getenv('CURSEFORGE_KEY') || project.hasProperty('curseforgeKey')) {
-//    println "Enabling CurseForge config."
-//    tasks.named('curseforge').configure { dependsOn(jar) }
-//
-//    curseforge {
-//        apiKey = System.getenv("CURSEFORGE_KEY") ?: project.findProperty("curseforgeKey")
-//
-//        project {
-//            id = ''
-//            changelogType = 'markdown'
-//            changelog = "[Changelog on GitHub - ${version}](https://raw.githubusercontent.com/cofh/version/main/${mod_id}/changelog.md)"
-//            releaseType = "${release_type}"
-//            mainArtifact(jar)
-//            addGameVersion "Java ${java_version}"
-//            addGameVersion "${mc_version}"
-//        }
-//    }
-//}
-//
-//if (System.getenv('MODRINTH_TOKEN') || project.hasProperty('modrinthToken')) {
-//    println "Enabling Modrinth config."
-//    tasks.named('modrinth').configure { dependsOn(jar) }
-//
-//    modrinth {
-//        token = System.getenv("MODRINTH_TOKEN") ?: project.findProperty("modrinthToken")
-//        projectId = ''
-//        versionNumber = "${mod_version}"
-//        versionType = "${release_type}"
-//        changelog = "[Changelog on GitHub - ${version}](https://raw.githubusercontent.com/cofh/version/main/${mod_id}/changelog.md)"
-//        uploadFile = jar
-//        gameVersions = ["${mc_version}"]
-//    }
-//}
+tasks.withType(ProcessResources).configureEach {
+    def replaceProperties = [
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_version            : mod_version,
+            cofh_core_version      : cofh_core_version,
+            cofh_core_max_version  : cofh_core_max_version,
+    ]
+    inputs.properties replaceProperties
 
-processResources {
-    filesMatching('META-INF/mods.toml') {
-        expand 'file': ['jarVersion': mod_version],
-                'mc_version': mc_version,
-                'neo_version': neo_version,
-                'lang_version': neo_version.split('\\.')[0],
-                'cofh_core_version_range': "[${cofh_core_version.replace(".+", "")},${cofh_core_max_version})"
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand replaceProperties
     }
 }
 
 repositories {
     mavenLocal()
-    maven { url 'https://maven.covers1624.net/' }
+    maven {
+        name = 'CoFH'
+        url = 'https://maven.covers1624.net/repository/cofh-releases/'
+        content {
+            includeGroup 'com.teamcofh'
+        }
+    }
     maven { url 'https://maven.blamejared.com/' }
-    maven { url 'https://maven.theillusivec4.top/' }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    maven { url 'https://cursemaven.com' }
 }
 
 dependencies {
     implementation("net.neoforged:neoforge:${neo_version}")
-    implementation "com.teamcofh:cofh_core:${mc_version}-${cofh_core_version}+"
+
+    implementation("com.teamcofh:cofh_core:${mc_version}-${cofh_core_version}.0")
 
     implementation("mezz.jei:jei-${mc_version}-neoforge:${jei_version}") {
         transitive false
     }
-    implementation("vazkii.patchouli:Patchouli:${patchouli_version}") {
+
+    implementation("maven.modrinth:curios:${curios_modrinth_version}") {
         transitive false
     }
-    implementation("top.theillusivec4.curios:curios-neoforge:${curios_version}") {
+
+    compileOnly("vazkii.patchouli:Patchouli:${patchouli_version}") {
         transitive false
     }
 }
@@ -172,14 +170,13 @@ publishing {
     publications {
         mod(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId base.archivesName.get()
             version project.version
-            artifact jar
-            artifact sourcesJar
+            from components.java
 
             pom {
-                name = archivesBaseName
-                description = archivesBaseName
+                name = base.archivesName.get()
+                description = base.archivesName.get()
                 url = "https://github.com/CoFH/${project.name}"
                 scm {
                     url = "https://github.com/CoFH/${project.name}"

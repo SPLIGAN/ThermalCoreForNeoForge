@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "thermal:hazmat_armor"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "tag": "c:leathers"
+    },
+    "R": {
+      "item": "thermal:cured_rubber"
+    },
+    "X": {
+      "item": "thermal:hazmat_fabric"
+    }
+  },
+  "pattern": [
+    "X X",
+    "LRL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:hazmat_boots"
+  }
+}

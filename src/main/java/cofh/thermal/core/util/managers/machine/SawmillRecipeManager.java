@@ -53,9 +53,9 @@ public class SawmillRecipeManager extends SingleItemRecipeManager {
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        var recipes = recipeManager.byType(SAWMILL_RECIPE.get());
-        for (var entry : recipes.entrySet()) {
-            addRecipe(entry.getValue().value());
+        var recipes = recipeManager.getAllRecipesFor(SAWMILL_RECIPE.get());
+        for (var holder : recipes) {
+            addRecipe(holder.value());
         }
 
         if (defaultLogRecipes) {
@@ -78,7 +78,7 @@ public class SawmillRecipeManager extends SingleItemRecipeManager {
 
     protected void createConvertedRecipes(RecipeManager recipeManager) {
 
-        for (var recipe : recipeManager.byType(RecipeType.CRAFTING).values()) {
+        for (var recipe : recipeManager.getAllRecipesFor(RecipeType.CRAFTING)) {
             if (recipe.value() instanceof ShapelessRecipe shapeless && recipe.value().getResultItem(RegistryAccess.EMPTY).is(ItemTags.PLANKS)) {
                 createConvertedRecipe(shapeless);
             }
@@ -107,7 +107,7 @@ public class SawmillRecipeManager extends SingleItemRecipeManager {
 
     protected RecipeHolder<SawmillRecipe> convert(Ingredient log, ItemStack planks) {
 
-        return new RecipeHolder<>(new ResourceLocation(ID_THERMAL, "sawmill_" + log.hashCode()),
+        return new RecipeHolder<>(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "sawmill_" + log.hashCode()),
                 new SawmillRecipe(getDefaultEnergy() / 2, 0.15F,
                         Collections.singletonList(log),
                         Collections.emptyList(), // no fluid input

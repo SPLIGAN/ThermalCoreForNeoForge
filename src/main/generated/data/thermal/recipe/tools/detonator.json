@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "tag": "c:gears/signalum"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "S": {
+      "tag": "c:ingots/silver"
+    }
+  },
+  "pattern": [
+    " S ",
+    "IGI",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:detonator"
+  }
+}

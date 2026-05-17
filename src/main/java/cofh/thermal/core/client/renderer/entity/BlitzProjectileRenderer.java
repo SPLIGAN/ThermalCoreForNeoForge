@@ -9,7 +9,7 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 
 public class BlitzProjectileRenderer extends ElementalProjectileRenderer<BlitzProjectile> {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ID_THERMAL + ":textures/entity/blitz_projectile.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(ID_THERMAL + ":textures/entity/blitz_projectile.png");
 
     public BlitzProjectileRenderer(EntityRendererProvider.Context ctx) {
 

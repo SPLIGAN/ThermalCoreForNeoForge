@@ -242,17 +242,17 @@ public class SmelterRecipeManager extends AbstractManager implements IRecipeMana
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        var recipes = recipeManager.byType(SMELTER_RECIPE.get());
-        for (var entry : recipes.entrySet()) {
-            addRecipe(entry.getValue().value(), BaseMachineRecipe.RecipeType.CATALYZED);
+        var recipes = recipeManager.getAllRecipesFor(SMELTER_RECIPE.get());
+        for (var holder : recipes) {
+            addRecipe(holder.value(), BaseMachineRecipe.RecipeType.CATALYZED);
         }
-        var recycle = recipeManager.byType(SMELTER_RECYCLE_RECIPE.get());
-        for (var entry : recycle.entrySet()) {
-            addRecipe(entry.getValue().value(), BaseMachineRecipe.RecipeType.DISENCHANT);
+        var recycle = recipeManager.getAllRecipesFor(SMELTER_RECYCLE_RECIPE.get());
+        for (var holder : recycle) {
+            addRecipe(holder.value(), BaseMachineRecipe.RecipeType.DISENCHANT);
         }
-        var catalysts = recipeManager.byType(SMELTER_CATALYST.get());
-        for (var entry : catalysts.entrySet()) {
-            addCatalyst(entry.getValue().value());
+        var catalysts = recipeManager.getAllRecipesFor(SMELTER_CATALYST.get());
+        for (var holder : catalysts) {
+            addCatalyst(holder.value());
         }
 
         if (defaultFurnaceRecipes) {
@@ -331,7 +331,7 @@ public class SmelterRecipeManager extends AbstractManager implements IRecipeMana
 
     protected void createConvertedRecipes(RecipeManager recipeManager) {
 
-        for (var recipe : recipeManager.byType(RecipeType.BLASTING).values()) {
+        for (var recipe : recipeManager.getAllRecipesFor(RecipeType.BLASTING)) {
             convertRecipe(recipe.value());
         }
     }
@@ -370,7 +370,7 @@ public class SmelterRecipeManager extends AbstractManager implements IRecipeMana
 
     protected RecipeHolder<SmelterRecipe> convertDust(Ingredient input, ItemStack ingot) {
 
-        return new RecipeHolder<>(new ResourceLocation(ID_THERMAL, "smelter_dust_" + input.hashCode()),
+        return new RecipeHolder<>(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "smelter_dust_" + input.hashCode()),
                 new SmelterRecipe(getDefaultEnergy() / 2, 0.0F,
                         Collections.singletonList(input),
                         Collections.emptyList(), // no fluid input
@@ -381,7 +381,7 @@ public class SmelterRecipeManager extends AbstractManager implements IRecipeMana
 
     protected RecipeHolder<SmelterRecipe> convertOre(Ingredient input, ItemStack ingot) {
 
-        return new RecipeHolder<>(new ResourceLocation(ID_THERMAL, "smelter_ore_" + input.hashCode()),
+        return new RecipeHolder<>(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "smelter_ore_" + input.hashCode()),
                 new SmelterRecipe(getDefaultEnergy(), 0.5F,
                         Collections.singletonList(input),
                         Collections.emptyList(), // no fluid input
@@ -392,7 +392,7 @@ public class SmelterRecipeManager extends AbstractManager implements IRecipeMana
 
     protected RecipeHolder<SmelterRecipe> convertRaw(Ingredient input, ItemStack ingot) {
 
-        return new RecipeHolder<>(new ResourceLocation(ID_THERMAL, "smelter_raw_" + input.hashCode()),
+        return new RecipeHolder<>(ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "smelter_raw_" + input.hashCode()),
                 new SmelterRecipe(getDefaultEnergy(), 0.5F,
                         Collections.singletonList(input),
                         Collections.emptyList(), // no fluid input

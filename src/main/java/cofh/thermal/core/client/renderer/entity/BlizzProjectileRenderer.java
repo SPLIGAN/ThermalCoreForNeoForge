@@ -8,7 +8,7 @@ import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 
 public class BlizzProjectileRenderer extends ElementalProjectileRenderer<BlizzProjectile> {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ID_THERMAL + ":textures/entity/blizz_projectile.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(ID_THERMAL + ":textures/entity/blizz_projectile.png");
 
     public BlizzProjectileRenderer(EntityRendererProvider.Context ctx) {
 

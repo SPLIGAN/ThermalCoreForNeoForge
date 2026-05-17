@@ -25,9 +25,9 @@ public class CentrifugeRecipeManager extends SingleItemRecipeManager {
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        var recipes = recipeManager.byType(CENTRIFUGE_RECIPE.get());
-        for (var entry : recipes.entrySet()) {
-            addRecipe(entry.getValue().value());
+        var recipes = recipeManager.getAllRecipesFor(CENTRIFUGE_RECIPE.get());
+        for (var holder : recipes) {
+            addRecipe(holder.value());
         }
     }
     // endregion

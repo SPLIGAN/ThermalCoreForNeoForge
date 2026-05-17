@@ -3,8 +3,9 @@ package cofh.thermal.core.common.block;
 import cofh.lib.api.block.IDismantleable;
 import cofh.lib.util.Utils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -30,17 +31,17 @@ public class HardenedGlassBlock extends TransparentBlock implements IDismantleab
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 
-        if (Utils.isWrench(player.getItemInHand(handIn))) {
+        if (Utils.isWrench(stack)) {
             if (player.isSecondaryUseActive()) {
                 if (canDismantle(worldIn, pos, state, player)) {
                     dismantleBlock(worldIn, pos, state, hit, player, returnDismantleDrops());
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.sidedSuccess(worldIn.isClientSide);
                 }
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
 }

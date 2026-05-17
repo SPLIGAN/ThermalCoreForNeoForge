@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.HoneyBottleItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -438,8 +439,8 @@ public class TCoreItems {
     }
     // endregion
 
-    public static final ArmorMaterialCoFH BEEKEEPER = new ArmorMaterialCoFH("thermal:beekeeper", 4, new int[]{1, 2, 3, 1}, 16, SoundEvents.ARMOR_EQUIP_ELYTRA, 0.0F, 0.0F, () -> Ingredient.of(ITEMS.get("beekeeper_fabric")));
-    public static final ArmorMaterialCoFH DIVING = new ArmorMaterialCoFH("thermal:diving", 12, new int[]{1, 4, 5, 2}, 20, SoundEvents.ARMOR_EQUIP_CHAIN, 0.0F, 0.0F, () -> Ingredient.of(ITEMS.get("diving_fabric")));
-    public static final ArmorMaterialCoFH HAZMAT = new ArmorMaterialCoFH("thermal:hazmat", 6, new int[]{1, 4, 5, 2}, 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> Ingredient.of(ITEMS.get("hazmat_fabric")));
+    public static final ArmorMaterial BEEKEEPER = ArmorMaterialCoFH.create("thermal", "beekeeper", 0, new int[]{1, 2, 3, 1, 0}, 16, SoundEvents.ARMOR_EQUIP_ELYTRA.value(), 0.0F, 0.0F, () -> Ingredient.of(ITEMS.get("beekeeper_fabric")));
+    public static final ArmorMaterial DIVING = ArmorMaterialCoFH.create("thermal", "diving", 12, new int[]{1, 4, 5, 2, 0}, 20, SoundEvents.ARMOR_EQUIP_CHAIN.value(), 0.0F, 0.0F, () -> Ingredient.of(ITEMS.get("diving_fabric")));
+    public static final ArmorMaterial HAZMAT = ArmorMaterialCoFH.create("thermal", "hazmat", 6, new int[]{1, 4, 5, 2, 0}, 15, SoundEvents.ARMOR_EQUIP_LEATHER.value(), 0.0F, 0.0F, () -> Ingredient.of(ITEMS.get("hazmat_fabric")));
 
 }

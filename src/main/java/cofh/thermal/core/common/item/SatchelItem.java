@@ -35,24 +35,25 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.entity.player.EntityItemPickupEvent;
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
 import static cofh.core.util.helpers.AugmentableHelper.setAttributeFromAugmentString;
+import static cofh.lib.util.constants.ModIds.ID_THERMAL;
 import static cofh.lib.util.constants.NBTTags.*;
 import static cofh.lib.util.helpers.StringHelper.getTextComponent;
 import static cofh.thermal.lib.util.ThermalAugmentRules.createAllowValidator;
 import static net.minecraft.nbt.Tag.TAG_COMPOUND;
 
-public class SatchelItem extends InventoryContainerItemAugmentable implements IColorableItem, DyeableLeatherItem, IFilterableItem, IMultiModeItem, ISecurableItem, MenuProvider {
+public class SatchelItem extends InventoryContainerItemAugmentable implements IColorableItem, IFilterableItem, IMultiModeItem, ISecurableItem, MenuProvider {
 
     protected static final Set<Item> BANNED_ITEMS = new ObjectOpenHashSet<>();
 
@@ -62,7 +63,7 @@ public class SatchelItem extends InventoryContainerItemAugmentable implements IC
             BANNED_ITEMS.clear();
 
             for (String loc : itemLocs) {
-                Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(loc));
+                Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(loc));
                 if (item != null) {
                     BANNED_ITEMS.add(item);
                 }
@@ -76,7 +77,7 @@ public class SatchelItem extends InventoryContainerItemAugmentable implements IC
 
         super(builder, slots);
 
-        ProxyUtils.registerItemModelProperty(this, new ResourceLocation("color"), (stack, world, entity, seed) -> (hasCustomColor(stack) ? 1F : 0));
+        ProxyUtils.registerItemModelProperty(this, ResourceLocation.fromNamespaceAndPath(ID_THERMAL, "color"), (stack, world, entity, seed) -> (stack.has(DataComponents.DYED_COLOR) ? 1F : 0));
         ProxyUtils.registerColorable(this);
 
         numSlots = () -> ThermalCoreConfig.storageAugments;
@@ -104,17 +105,17 @@ public class SatchelItem extends InventoryContainerItemAugmentable implements IC
     }
 
     // region HELPERS
-    public static boolean onItemPickup(EntityItemPickupEvent event, ItemStack container) {
+    public static boolean onItemPickup(ItemEntityPickupEvent.Pre event, ItemStack container) {
 
         SatchelItem satchelItem = (SatchelItem) container.getItem();
-        if (satchelItem.getMode(container) <= 0 || !satchelItem.canPlayerAccess(container, event.getEntity())) {
+        if (satchelItem.getMode(container) <= 0 || !satchelItem.canPlayerAccess(container, event.getPlayer())) {
             return false;
         }
-        ItemEntity eventItem = event.getItem();
+        ItemEntity eventItem = event.getItemEntity();
         int count = eventItem.getItem().getCount();
 
         if (satchelItem.getFilter(container).valid(eventItem.getItem())) {
-            Player player = event.getEntity();
+            Player player = event.getPlayer();
             dropExtraItems(container, player);
 
             SimpleItemInv containerInv = satchelItem.getContainerInventory(container);
@@ -198,10 +199,11 @@ public class SatchelItem extends InventoryContainerItemAugmentable implements IC
     @Override
     protected void setAttributesFromAugment(ItemStack container, CompoundTag augmentData) {
 
-        CompoundTag subTag = container.getTagElement(TAG_PROPERTIES);
-        if (subTag == null) {
+        CompoundTag root = cofh.lib.util.CoFHItemData.getTag(container);
+        if (!root.contains(TAG_PROPERTIES, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             return;
         }
+        CompoundTag subTag = root.getCompound(TAG_PROPERTIES);
         setAttributeFromAugmentString(subTag, augmentData, TAG_FILTER_TYPE);
 
         super.setAttributesFromAugment(container, augmentData);
@@ -238,7 +240,7 @@ public class SatchelItem extends InventoryContainerItemAugmentable implements IC
         if (FILTERS.size() > MAP_CAPACITY) {
             FILTERS.clear();
         }
-        FILTERS.put(stack, FilterRegistry.getFilter(filterType, stack.getTag()));
+        FILTERS.put(stack, FilterRegistry.getFilter(filterType, cofh.lib.util.CoFHItemData.getTag(stack)));
         return FILTERS.get(stack);
     }
 

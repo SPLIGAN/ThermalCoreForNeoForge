@@ -17,7 +17,7 @@ import static cofh.lib.util.helpers.SoundHelper.playClickSound;
 public class TinkerBenchScreen extends AugmentableTileScreen<TinkerBenchMenu> {
 
     public static final String TEX_PATH = ID_THERMAL + ":textures/gui/container/tinker_bench.png";
-    public static final ResourceLocation TEXTURE = new ResourceLocation(TEX_PATH);
+    public static final ResourceLocation TEXTURE = ResourceLocation.parse(TEX_PATH);
 
     public static final String TEX_AUGMENT = ID_THERMAL + ":textures/gui/container/tinker_bench_mode_augment.png";
     public static final String TEX_REPLENISH = ID_THERMAL + ":textures/gui/container/tinker_bench_mode_replenish.png";

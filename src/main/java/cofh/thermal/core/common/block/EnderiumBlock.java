@@ -33,7 +33,7 @@ public class EnderiumBlock extends Block {
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
 
         if (entityIn instanceof LivingEntity) {
-            ((LivingEntity) entityIn).addEffect(new MobEffectInstance(ENDERFERENCE.get(), duration, 0, false, false));
+            ((LivingEntity) entityIn).addEffect(new MobEffectInstance(ENDERFERENCE, duration, 0, false, false));
         }
     }
 

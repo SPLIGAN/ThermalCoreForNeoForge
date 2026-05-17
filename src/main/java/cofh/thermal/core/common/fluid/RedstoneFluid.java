@@ -57,7 +57,7 @@ public class RedstoneFluid extends FluidCoFH {
         particleColor = new Vector3f(0.4F, 0.0F, 0.0F);
 
         block = BLOCKS.register(fluid(ID_FLUID_REDSTONE), () -> new FluidBlock(stillFluid, of().mapColor(MapColor.COLOR_RED).lightLevel(lightValue(7)).replaceable().noCollission().strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable()));
-        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_REDSTONE), () -> new BucketItem(stillFluid, itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
+        bucket = toolsTab(1000, ITEMS.register(bucket(ID_FLUID_REDSTONE), () -> new BucketItem(stillFluid.get(), itemProperties().craftRemainder(Items.BUCKET).stacksTo(1))));
     }
 
     @Override
@@ -90,8 +90,8 @@ public class RedstoneFluid extends FluidCoFH {
             consumer.accept(new IClientFluidTypeExtensions() {
 
                 private static final ResourceLocation
-                        STILL = new ResourceLocation("thermal:block/fluids/redstone_still"),
-                        FLOW = new ResourceLocation("thermal:block/fluids/redstone_flow");
+                        STILL = ResourceLocation.parse("thermal:block/fluids/redstone_still"),
+                        FLOW = ResourceLocation.parse("thermal:block/fluids/redstone_flow");
 
                 @Override
                 public ResourceLocation getStillTexture() {
@@ -149,7 +149,7 @@ public class RedstoneFluid extends FluidCoFH {
 
         public FluidBlock(Supplier<? extends FlowingFluid> fluidSup, Properties properties) {
 
-            super(fluidSup, properties);
+            super(fluidSup.get(), properties);
         }
 
         @Override

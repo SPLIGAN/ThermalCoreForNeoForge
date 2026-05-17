@@ -1,17 +1,16 @@
 package cofh.thermal.core.util.recipes.device;
 
 import cofh.lib.util.recipes.SerializableRecipe;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.fluids.FluidStack;
-
-import javax.annotation.Nullable;
 
 import static cofh.lib.util.Utils.getRegistryName;
 import static cofh.lib.util.recipes.RecipeJsonUtils.*;
@@ -63,55 +62,41 @@ public class HiveExtractorMapping extends SerializableRecipe {
     // region SERIALIZER
     public static class Serializer implements RecipeSerializer<HiveExtractorMapping> {
 
-        public static final Codec<HiveExtractorMapping> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-                        Block.CODEC.fieldOf(HIVE).forGetter(recipe -> recipe.hive),
-                        ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf(ITEM).forGetter(recipe -> recipe.item),
-                        FluidStack.CODEC.fieldOf(FLUID).forGetter(recipe -> recipe.fluid)
+        public static final MapCodec<HiveExtractorMapping> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
+                        BuiltInRegistries.BLOCK.byNameCodec().fieldOf(HIVE).forGetter(HiveExtractorMapping::getHive),
+                        ItemStack.CODEC.fieldOf(ITEM).forGetter(HiveExtractorMapping::getItem),
+                        FluidStack.CODEC.fieldOf(FLUID).forGetter(HiveExtractorMapping::getFluid)
                 ).apply(builder, HiveExtractorMapping::new)
         );
 
+        public static final StreamCodec<RegistryFriendlyByteBuf, HiveExtractorMapping> STREAM_CODEC = StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
+
         @Override
-        public Codec<HiveExtractorMapping> codec() {
+        public MapCodec<HiveExtractorMapping> codec() {
 
             return CODEC;
         }
 
-        //        @Override
-        //        public HiveExtractorMapping fromJson(ResourceLocation recipeId, JsonObject json) {
-        //
-        //            Block hive = Blocks.AIR;
-        //            ItemStack item = ItemStack.EMPTY;
-        //            FluidStack fluid = FluidStack.EMPTY;
-        //
-        //            if (json.has(HIVE)) {
-        //                hive = parseBlock(json.get(HIVE));
-        //            }
-        //            if (json.has(ITEM)) {
-        //                item = parseItemStack(json.get(ITEM));
-        //            }
-        //            if (json.has(FLUID)) {
-        //                fluid = parseFluidStack(json.get(FLUID));
-        //            }
-        //            return new HiveExtractorMapping(recipeId, hive, item, fluid);
-        //        }
-
-        @Nullable
         @Override
-        public HiveExtractorMapping fromNetwork(FriendlyByteBuf buffer) {
+        public StreamCodec<RegistryFriendlyByteBuf, HiveExtractorMapping> streamCodec() {
+
+            return STREAM_CODEC;
+        }
+
+        private static HiveExtractorMapping fromNetwork(RegistryFriendlyByteBuf buffer) {
 
             Block hive = BuiltInRegistries.BLOCK.get(buffer.readResourceLocation());
-            ItemStack item = buffer.readItem();
-            FluidStack fluid = buffer.readFluidStack();
+            ItemStack item = ItemStack.STREAM_CODEC.decode(buffer);
+            FluidStack fluid = FluidStack.STREAM_CODEC.decode(buffer);
 
             return new HiveExtractorMapping(hive, item, fluid);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, HiveExtractorMapping recipe) {
+        private static void toNetwork(RegistryFriendlyByteBuf buffer, HiveExtractorMapping recipe) {
 
             buffer.writeResourceLocation(getRegistryName(recipe.hive));
-            buffer.writeItem(recipe.item);
-            buffer.writeFluidStack(recipe.fluid);
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.item);
+            FluidStack.STREAM_CODEC.encode(buffer, recipe.fluid);
         }
 
     }

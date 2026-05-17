@@ -162,9 +162,9 @@ public class CrystallizerRecipeManager extends AbstractManager implements IRecip
     public void refresh(RecipeManager recipeManager) {
 
         clear();
-        var recipes = recipeManager.byType(CRYSTALLIZER_RECIPE.get());
-        for (var entry : recipes.entrySet()) {
-            addRecipe(entry.getValue().value());
+        var recipes = recipeManager.getAllRecipesFor(CRYSTALLIZER_RECIPE.get());
+        for (var holder : recipes) {
+            addRecipe(holder.value());
         }
     }
     // endregion

@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "cofh_core:flag_set",
+      "flag": "device_collector"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:hopper"
+    },
+    "G": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "I": {
+      "tag": "c:ingots/tin"
+    },
+    "P": {
+      "item": "thermal:redstone_servo"
+    },
+    "X": {
+      "tag": "c:ender_pearls"
+    }
+  },
+  "pattern": [
+    "IXI",
+    "GCG",
+    "IPI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thermal:device_collector"
+  }
+}
