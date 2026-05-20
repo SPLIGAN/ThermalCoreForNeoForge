@@ -4,7 +4,7 @@ import cofh.thermal.core.ThermalCore;
 import cofh.thermal.core.util.recipes.dynamo.DisenchantmentFuel;
 import cofh.thermal.lib.util.managers.SingleItemFuelManager;
 import cofh.thermal.lib.util.recipes.internal.IDynamoFuel;
-import cofh.lib.util.CoFHRegistryLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -35,9 +35,16 @@ public class DisenchantmentFuelManager extends SingleItemFuelManager {
     private static final DisenchantmentFuelManager INSTANCE = new DisenchantmentFuelManager();
     protected static final int DEFAULT_ENERGY = 16000;
 
+    private RegistryAccess registryAccess;
+
     public static DisenchantmentFuelManager instance() {
 
         return INSTANCE;
+    }
+
+    public void setRegistryAccess(RegistryAccess registryAccess) {
+
+        this.registryAccess = registryAccess;
     }
 
     private DisenchantmentFuelManager() {
@@ -106,8 +113,15 @@ public class DisenchantmentFuelManager extends SingleItemFuelManager {
 
     protected void createConvertedRecipes(RecipeManager recipeManager) {
 
+        if (registryAccess == null) {
+            return;
+        }
+        var enchantLookup = registryAccess.lookup(Registries.ENCHANTMENT);
+        if (enchantLookup.isEmpty()) {
+            return;
+        }
         List<ItemStack> books = new ArrayList<>();
-        for (Holder.Reference<Enchantment> enchant : CoFHRegistryLookup.registries().lookupOrThrow(Registries.ENCHANTMENT).listElements().toList()) {
+        for (Holder.Reference<Enchantment> enchant : enchantLookup.get().listElements().toList()) {
             books.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, enchant.value().getMaxLevel())));
         }
         for (ItemStack book : books) {

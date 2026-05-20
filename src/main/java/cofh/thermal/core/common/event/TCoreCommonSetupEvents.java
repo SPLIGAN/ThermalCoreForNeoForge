@@ -1,5 +1,6 @@
 package cofh.thermal.core.common.event;
 
+import cofh.thermal.core.util.managers.dynamo.DisenchantmentFuelManager;
 import cofh.thermal.lib.util.ThermalRecipeManagers;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -36,6 +37,7 @@ public class TCoreCommonSetupEvents {
     @SubscribeEvent
     public static void tagsUpdated(final TagsUpdatedEvent event) {
 
+        DisenchantmentFuelManager.instance().setRegistryAccess(event.getRegistryAccess());
         ThermalRecipeManagers.instance().refreshServer();
         ThermalRecipeManagers.instance().refreshClient();
     }
